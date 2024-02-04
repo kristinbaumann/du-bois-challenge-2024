@@ -12,7 +12,7 @@
 	projection.fitSize([450, 600], dataCounties);
 	const drawCountyPath = geoPath(projection);
 
-	$: hoveredCountyIndex = 0;
+	$: hoveredCountyIndex = null;
 	$: selectedYear = '1880';
 
 	$: getCountyColor = function getColor(c) {
@@ -20,7 +20,6 @@
 		const countyName = countyNameWithNumber.substring(0, countyNameWithNumber.length - 2);
 		const dataset = selectedYear === '1870' ? data1870 : data1880;
 		const populationSize = dataset[countyName].Population;
-		console.log(countyName, colors, populationSize);
 		return colors[populationSize].hex;
 	};
 </script>
@@ -35,9 +34,9 @@
 	</button>
 </div>
 <svg width="500" height="600">
-	<g transform="translate(25,0) rotate(5)">
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<g transform="translate(25,0) rotate(5)" on:mouseleave={() => (hoveredCountyIndex = null)}>
 		{#each dataCounties.features as c, i}
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<path
 				d={drawCountyPath(c)}
 				id={c.properties.county}
@@ -51,6 +50,11 @@
 	</g>
 </svg>
 <img src={original} alt="Original by Wes Du Bois" />
+<div class="legend">
+	{#each Object.values(colors) as color}
+		<p><span style="background-color: {color.hex} "></span>{color.populationDescription}</p>
+	{/each}
+</div>
 
 <style>
 	svg {
@@ -60,13 +64,20 @@
 		cursor: pointer;
 		stroke: #333333;
 		stroke-opacity: 0.5;
-		transition: all 0.5s ease;
+		transition: all 0.4s ease;
 	}
 	.filter button.active {
 		font-weight: bold;
 	}
 	img {
-		height: 900px;
+		height: 600px;
 		position: absolute;
+	}
+	.legend span {
+		display: inline-block;
+		width: 15px;
+		height: 15px;
+		border-radius: 50%;
+		margin-right: 5px;
 	}
 </style>

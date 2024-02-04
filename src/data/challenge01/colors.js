@@ -33,11 +33,6 @@ const colors = {
 		populationDescription: 'UNDER 1,000',
 		hex: '#5C6D5F',
 		sort: 6
-	},
-	'NOT DEFINED': {
-		populationDescription: 'NOT DEFINED',
-		hex: '#ffffff',
-		sort: 7
 	}
 };
 export default colors;
