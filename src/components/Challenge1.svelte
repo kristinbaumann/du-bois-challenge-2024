@@ -1,43 +1,53 @@
 <!-- Negro Population of Georgia by Counties, 1870, 1880 (plate 06) -->
-<!-- Credit for Geojson file: Madison Giammaria -->
+<!-- Credit for underlying Geojson file: Madison Giammaria -->
 <script>
 	import { geoPath, geoAlbers } from 'd3-geo';
-	import data from '../data/counties_cleaned';
+	import dataCounties from '../data/counties_cleaned';
 	import data1870 from '../data/data-1870_converted_corrected';
+	import data1880 from '../data/data-1880_converted';
 	import colors from '../data/colors';
 
-	const dataset = data.features;
+	// map
 	const projection = geoAlbers();
-	projection.fitSize([450, 600], data);
-	const path = geoPath(projection);
+	projection.fitSize([450, 600], dataCounties);
+	const drawCountyPath = geoPath(projection);
 
-	console.log(data1870, colors);
+	$: hoveredCountyIndex = 0;
+	$: selectedYear = '1880';
 
-	function getColor(c) {
+	$: getCountyColor = function getColor(c) {
 		const countyNameWithNumber = c.properties.county;
 		const countyName = countyNameWithNumber.substring(0, countyNameWithNumber.length - 2);
-		const populationSize = data1870[countyName].Population;
-		const color = colors[populationSize].hex;
-		// console.log(countyName, populationSize, color);
-		return color;
-	}
-	function getPopulationSize(c) {
-		const countyNameWithNumber = c.properties.county;
-		const countyName = countyNameWithNumber.substring(0, countyNameWithNumber.length - 2);
-		return data1870[countyName].Population;
-	}
+		const dataset = selectedYear === '1870' ? data1870 : data1880;
+		const populationSize = dataset[countyName].Population;
+		return colors[populationSize].hex;
+	};
 </script>
 
+<div class="filter">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<p class={selectedYear === '1870' ? 'active' : ''} on:click={() => (selectedYear = '1870')}>
+		1870
+	</p>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<p class={selectedYear === '1880' ? 'active' : ''} on:click={() => (selectedYear = '1880')}>
+		1880
+	</p>
+</div>
 <svg width="500" height="600">
 	<g transform="translate(25,0) rotate(5)">
-		{#each dataset as c}
+		{#each dataCounties.features as c, i}
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<path
-				d={path(c)}
+				d={drawCountyPath(c)}
 				id={c.properties.county}
 				class="county"
-				data-color={getColor(c)}
-				data-pop={getPopulationSize(c)}
-				fill={getColor(c)}
+				fill={getCountyColor(c)}
+				fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
+				on:mouseover={() => (hoveredCountyIndex = i)}
+				on:focus={() => (hoveredCountyIndex = i)}
 			/>
 		{/each}
 	</g>
@@ -47,8 +57,16 @@
 	svg {
 		background-color: lightgray;
 	}
-	path.county {
+	path {
+		cursor: pointer;
 		stroke: #333333;
 		stroke-opacity: 0.5;
+		transition: all 0.5s ease;
+	}
+	.filter p {
+		cursor: pointer;
+	}
+	.filter p.active {
+		font-weight: bold;
 	}
 </style>

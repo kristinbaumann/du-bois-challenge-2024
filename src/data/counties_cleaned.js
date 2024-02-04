@@ -1,4 +1,4 @@
-const data = {
+const dataCounties = {
 	type: 'FeatureCollection',
 	features: [
 		{
@@ -13578,4 +13578,4 @@ const data = {
 	]
 };
 
-export default data;
+export default dataCounties;
