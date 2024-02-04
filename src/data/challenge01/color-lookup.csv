@@ -6,3 +6,4 @@ populationLookup,populationDescription,hex,sort
 2500 - 5000,"2,500 TO 5,000",#DB918D,4
 1000 - 2500,"1,000 TO 2,000",#EAB45C,5
 > 1000,"UNDER 1,000",#5C6D5F,6
+0,"UNDEFINED",#fff,7

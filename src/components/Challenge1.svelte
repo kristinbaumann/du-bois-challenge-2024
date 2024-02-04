@@ -2,12 +2,12 @@
 <!-- Credit for underlying Geojson file: Madison Giammaria -->
 <script>
 	import { geoPath, geoAlbers } from 'd3-geo';
-	import dataCounties from '../data/counties_cleaned';
-	import data1870 from '../data/data-1870_converted_corrected';
-	import data1880 from '../data/data-1880_converted';
-	import colors from '../data/colors';
+	import dataCounties from '../data/challenge01/counties_cleaned';
+	import data1870 from '../data/challenge01/data-1870_converted_corrected';
+	import data1880 from '../data/challenge01/data-1880_converted_corrected';
+	import colors from '../data/challenge01/colors';
+	import original from '$lib/assets/originals/original-plate-06.jpg';
 
-	// map
 	const projection = geoAlbers();
 	projection.fitSize([450, 600], dataCounties);
 	const drawCountyPath = geoPath(projection);
@@ -20,21 +20,19 @@
 		const countyName = countyNameWithNumber.substring(0, countyNameWithNumber.length - 2);
 		const dataset = selectedYear === '1870' ? data1870 : data1880;
 		const populationSize = dataset[countyName].Population;
+		console.log(countyName, colors, populationSize);
 		return colors[populationSize].hex;
 	};
 </script>
 
+<h2>Negro Population of Georgia By County</h2>
 <div class="filter">
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<p class={selectedYear === '1870' ? 'active' : ''} on:click={() => (selectedYear = '1870')}>
+	<button class={selectedYear === '1870' ? 'active' : ''} on:click={() => (selectedYear = '1870')}>
 		1870
-	</p>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<p class={selectedYear === '1880' ? 'active' : ''} on:click={() => (selectedYear = '1880')}>
+	</button>
+	<button class={selectedYear === '1880' ? 'active' : ''} on:click={() => (selectedYear = '1880')}>
 		1880
-	</p>
+	</button>
 </div>
 <svg width="500" height="600">
 	<g transform="translate(25,0) rotate(5)">
@@ -52,6 +50,7 @@
 		{/each}
 	</g>
 </svg>
+<img src={original} alt="Original by Wes Du Bois" />
 
 <style>
 	svg {
@@ -63,10 +62,11 @@
 		stroke-opacity: 0.5;
 		transition: all 0.5s ease;
 	}
-	.filter p {
-		cursor: pointer;
-	}
-	.filter p.active {
+	.filter button.active {
 		font-weight: bold;
+	}
+	img {
+		height: 900px;
+		position: absolute;
 	}
 </style>
