@@ -8,76 +8,120 @@
 	import colors from '../data/challenge01/colors';
 
 	const projection = geoAlbers();
-	projection.fitSize([450, 600], dataCounties);
+	projection.fitSize([425, 450], dataCounties);
 	const drawCountyPath = geoPath(projection);
 
+	const filterOptions = [
+		{
+			key: '1870',
+			label: 'Count from 1870',
+			dataset: data1870
+		},
+		{
+			key: '1880',
+			label: 'Count from 1880',
+			dataset: data1880
+		},
+		{
+			key: 'relative',
+			label: 'Relative Change from 1870 to 1880',
+			dataset: data1870
+		}
+	];
+
 	$: hoveredCountyIndex = null;
-	$: selectedYear = '1880';
+	$: selectedFilter = filterOptions[0];
 
 	$: getCountyColor = function getColor(c) {
 		const countyNameWithNumber = c.properties.county;
 		const countyName = countyNameWithNumber.substring(0, countyNameWithNumber.length - 2);
-		const dataset = selectedYear === '1870' ? data1870 : data1880;
+		const dataset = selectedFilter.dataset;
 		const populationSize = dataset[countyName].Population;
 		return colors[populationSize].hex;
 	};
 </script>
 
-<!-- <h2>Negro Population of Georgia By County</h2> -->
+<h2 class="headline">Negro Population of Georgia By Counties.</h2>
 
 <div class="filter">
-	<button class={selectedYear === '1870' ? 'active' : ''} on:click={() => (selectedYear = '1870')}>
-		1870
-	</button>
-	<button class={selectedYear === '1880' ? 'active' : ''} on:click={() => (selectedYear = '1880')}>
-		1880
-	</button>
-</div>
-<svg width="500" height="600">
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<g transform="translate(25,0) rotate(5)" on:mouseleave={() => (hoveredCountyIndex = null)}>
-		{#each dataCounties.features as c, i}
-			<path
-				d={drawCountyPath(c)}
-				id={c.properties.county}
-				class="county"
-				fill={getCountyColor(c)}
-				fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
-				on:mouseover={() => (hoveredCountyIndex = i)}
-				on:focus={() => (hoveredCountyIndex = i)}
-			/>
-		{/each}
-	</g>
-</svg>
-<!-- <img src={original} alt="Original by Wes Du Bois" /> -->
-<div class="legend">
-	{#each Object.values(colors) as color}
-		<p><span style="background-color: {color.hex} "></span>{color.populationDescription}</p>
+	<p>Color map by:</p>
+	{#each filterOptions as option}
+		<button
+			class={selectedFilter === option ? 'active' : ''}
+			on:click={() => (selectedFilter = option)}
+		>
+			{option.label}
+		</button>
 	{/each}
+</div>
+<div class="map-plus-legend">
+	<svg width="450" height="500">
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<g transform="translate(25,0) rotate(6)" on:mouseleave={() => (hoveredCountyIndex = null)}>
+			{#each dataCounties.features as c, i}
+				<path
+					d={drawCountyPath(c)}
+					id={c.properties.county}
+					class="county"
+					fill={getCountyColor(c)}
+					fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
+					on:mouseover={() => (hoveredCountyIndex = i)}
+					on:focus={() => (hoveredCountyIndex = i)}
+				/>
+			{/each}
+		</g>
+	</svg>
+
+	<div class="legend">
+		{#each Object.values(colors) as color}
+			<p>
+				<span style="background-color: {color.hex} "
+				></span>{color.populationDescription.toLowerCase()}
+			</p>
+		{/each}
+	</div>
 </div>
 
 <style>
-	/* svg {
-		background-color: lightgray;
-	} */
 	path {
 		cursor: pointer;
 		stroke: #333333;
 		stroke-opacity: 0.5;
 		transition: all 0.4s ease;
 	}
-	.filter button.active {
-		font-weight: bold;
+	.filter button {
+		cursor: pointer;
+		background-color: rgba(0, 0, 0, 0.02);
+		border: 1px solid #333;
+		border-radius: 5px;
+		transition: all 0.2s ease;
+		margin-right: 12px;
+		padding: 3px 10px;
 	}
-	/* img {
-		height: 600px;
-		position: absolute;
-	} */
+	.filter button:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+	.filter button.active {
+		background-color: rgba(0, 0, 0, 0.7);
+		color: rgba(356, 356, 356, 0.8);
+	}
+
 	.legend span {
 		display: inline-block;
 		width: 15px;
 		height: 15px;
 		border-radius: 50%;
 		margin-right: 5px;
+	}
+	.filter {
+		margin-bottom: 5px;
+	}
+	.filter p {
+		margin-bottom: 10px;
+	}
+	.map-plus-legend {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
 	}
 </style>

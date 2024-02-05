@@ -13,7 +13,6 @@
 	<Challenge number="1">
 		<Challenge1 />
 	</Challenge>
-	<Challenge number="2"></Challenge>
 </section>
 
 <svelte:head>
@@ -48,5 +47,11 @@
 	:global(section.outer) {
 		margin: 0 50px;
 		padding: 20px 0;
+	}
+	:global(.recreation .headline) {
+		margin-top: 0.5rem;
+		text-align: center;
+		text-transform: uppercase;
+		font-size: 1rem;
 	}
 </style>
