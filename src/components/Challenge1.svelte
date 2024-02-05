@@ -14,12 +14,12 @@
 	const filterOptions = [
 		{
 			key: '1870',
-			label: 'Count from 1870',
+			label: 'Count in 1870',
 			dataset: data1870
 		},
 		{
 			key: '1880',
-			label: 'Count from 1880',
+			label: 'Count in 1880',
 			dataset: data1880
 		},
 		{
@@ -32,9 +32,43 @@
 	$: hoveredCountyIndex = null;
 	$: selectedFilter = filterOptions[0];
 
+	let tooltipX = 0;
+	let tooltipY = 0;
+
+	function extractCountyName(nameWithNumber) {
+		return nameWithNumber.substring(0, nameWithNumber.length - 2);
+	}
+	function toTitleCase(str) {
+		return str.replace(/\w\S*/g, function (txt) {
+			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+		});
+	}
+
+	function getCountyNameFromIndex(index) {
+		if (index && dataCounties.features[index]) {
+			return toTitleCase(extractCountyName(dataCounties.features[index].properties.county));
+		}
+		return '';
+	}
+
+	function getPopulationSizeFromIndex(index, year) {
+		if (!index) {
+			return '';
+		}
+		const countyNameWithNumber = dataCounties.features[index].properties.county;
+		const countyName = extractCountyName(countyNameWithNumber);
+		let populationSize = 0;
+		if (year === '1870') {
+			populationSize = data1870[countyName].Population;
+		} else {
+			populationSize = data1880[countyName].Population;
+		}
+		return populationSize;
+	}
+
 	$: getCountyColor = function getColor(c) {
 		const countyNameWithNumber = c.properties.county;
-		const countyName = countyNameWithNumber.substring(0, countyNameWithNumber.length - 2);
+		const countyName = extractCountyName(countyNameWithNumber);
 		const dataset = selectedFilter.dataset;
 		const populationSize = dataset[countyName].Population;
 		return colors[populationSize].hex;
@@ -81,6 +115,24 @@
 		{/each}
 	</div>
 </div>
+<!-- {#if hoveredCountyIndex} -->
+<div
+	class="tooltip"
+	style="position: absolute;
+	top: {tooltipX}px;
+	left: {tooltipY}px;"
+>
+	<p>{getCountyNameFromIndex(hoveredCountyIndex)}</p>
+	<p></p>
+	<div class="info">
+		<span>Count in 1870: {getPopulationSizeFromIndex(hoveredCountyIndex, '1870')}</span>
+		<br />
+		<span>Count for 1880: {getPopulationSizeFromIndex(hoveredCountyIndex, '1880')} </span>
+	</div>
+	<span class="bar" />
+</div>
+
+<!-- {/if} -->
 
 <style>
 	path {
@@ -123,5 +175,23 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+	}
+	.tooltip {
+		background: white;
+		box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.15);
+		padding: 8px;
+		border-radius: 3px;
+		pointer-events: none;
+		transition:
+			top 300ms ease,
+			left 300ms ease;
+	}
+	.tooltip .bar {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 3px;
+		width: 100%;
+		background: black;
 	}
 </style>

@@ -57,5 +57,6 @@
 		background-color: #e4cfbed9;
 		border-radius: 10px;
 		padding: 20px;
+		position: relative;
 	}
 </style>
