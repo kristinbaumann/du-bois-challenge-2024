@@ -1,7 +1,52 @@
 <script>
+	import Challenge from '../components/Challenge.svelte';
 	import Challenge1 from '../components/Challenge1.svelte';
+	import Header from '../components/Header.svelte';
+	import Intro from '../components/Intro.svelte';
 </script>
 
-<h1>Du Bois Challenge 2024</h1>
-<p>Challenge 1</p>
-<Challenge1 />
+<Header />
+<section class="inner">
+	<Intro />
+</section>
+<section class="outer">
+	<Challenge number="1">
+		<Challenge1 />
+	</Challenge>
+	<Challenge number="2"></Challenge>
+</section>
+
+<svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap"
+		rel="stylesheet"
+	/>
+</svelte:head>
+
+<style>
+	@font-face {
+		font-family: 'Gelasio';
+		font-style: normal;
+		font-weight: 400;
+		src:
+			local('Gelasio Regular'),
+			local('Gelasio-Regular'),
+			url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
+	}
+
+	:global(body) {
+		margin: 0;
+		font-family: Ubuntu, sans-serif;
+	}
+	:global(section.inner) {
+		max-width: 600px;
+		margin: auto;
+		padding: 20px 0;
+	}
+	:global(section.outer) {
+		margin: 0 50px;
+		padding: 20px 0;
+	}
+</style>

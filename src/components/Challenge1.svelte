@@ -6,7 +6,6 @@
 	import data1870 from '../data/challenge01/data-1870_converted_corrected';
 	import data1880 from '../data/challenge01/data-1880_converted_corrected';
 	import colors from '../data/challenge01/colors';
-	import original from '$lib/assets/originals/original-plate-06.jpg';
 
 	const projection = geoAlbers();
 	projection.fitSize([450, 600], dataCounties);
@@ -24,7 +23,8 @@
 	};
 </script>
 
-<h2>Negro Population of Georgia By County</h2>
+<!-- <h2>Negro Population of Georgia By County</h2> -->
+
 <div class="filter">
 	<button class={selectedYear === '1870' ? 'active' : ''} on:click={() => (selectedYear = '1870')}>
 		1870
@@ -49,7 +49,7 @@
 		{/each}
 	</g>
 </svg>
-<img src={original} alt="Original by Wes Du Bois" />
+<!-- <img src={original} alt="Original by Wes Du Bois" /> -->
 <div class="legend">
 	{#each Object.values(colors) as color}
 		<p><span style="background-color: {color.hex} "></span>{color.populationDescription}</p>
@@ -57,9 +57,9 @@
 </div>
 
 <style>
-	svg {
+	/* svg {
 		background-color: lightgray;
-	}
+	} */
 	path {
 		cursor: pointer;
 		stroke: #333333;
@@ -69,10 +69,10 @@
 	.filter button.active {
 		font-weight: bold;
 	}
-	img {
+	/* img {
 		height: 600px;
 		position: absolute;
-	}
+	} */
 	.legend span {
 		display: inline-block;
 		width: 15px;
