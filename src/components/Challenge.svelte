@@ -19,7 +19,7 @@
 			/>
 		</div>
 		<div class="recreation">
-			<p>Recreation</p>
+			<p>Adaptation</p>
 			<div class="recreation-wrapper">
 				<slot />
 			</div>
@@ -36,14 +36,24 @@
 	.challenge-wrapper {
 		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
+		justify-content: space-around;
 		column-gap: 25px;
+		flex-wrap: wrap;
 	}
 	.original {
-		width: 33%;
+		max-width: 32%;
+		flex-grow: 1;
 	}
 	.recreation {
-		width: 66%;
+		max-width: 66%;
+	}
+	@media (max-width: 1160px) {
+		.original {
+			max-width: 100%;
+		}
+		.recreation {
+			max-width: 100%;
+		}
 	}
 
 	.original img {

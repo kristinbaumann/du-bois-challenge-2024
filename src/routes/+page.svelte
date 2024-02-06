@@ -45,8 +45,10 @@
 		padding: 20px 0;
 	}
 	:global(section.outer) {
-		margin: 0 50px;
-		padding: 20px 0;
+		/* margin: 0 50px; */
+		margin: auto;
+		padding: 20px;
+		max-width: 1200px;
 	}
 	:global(.recreation .headline) {
 		margin-top: 0.5rem;

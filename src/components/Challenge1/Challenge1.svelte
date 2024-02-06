@@ -9,8 +9,11 @@
 	import Tooltip from './Tooltip.svelte';
 	import { extractCountyName, getCountyNameFromIndex, getPopulationSizeFromIndex } from './helpers';
 
+	let mapWidth = 450;
+	let mapHeight = 500;
+
 	const projection = geoAlbers();
-	projection.fitSize([425, 450], dataCounties);
+	projection.fitSize([mapWidth, mapHeight], dataCounties);
 	const drawCountyPath = geoPath(projection);
 
 	const filterOptions = [
@@ -69,7 +72,7 @@
 	{/each}
 </div>
 <div class="map-plus-legend">
-	<svg width="450" height="500">
+	<svg width={mapWidth} height={mapHeight}>
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<g transform="translate(25,0) rotate(6)" on:mouseleave={() => (hoveredCountyIndex = null)}>
 			{#each dataCounties.features as c, i}
@@ -127,6 +130,7 @@
 		margin-right: 5px;
 	}
 	.filter {
+		text-align: center;
 		margin-bottom: 5px;
 	}
 	.filter p {
@@ -136,5 +140,10 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+	}
+	@media (max-width: 1160px) {
+		.map-plus-legend {
+			flex-direction: column;
+		}
 	}
 </style>

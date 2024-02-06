@@ -17,6 +17,7 @@
 
 <style>
 	p {
-		line-height: 2rem;
+		padding: 0 2rem;
+		line-height: 1.8rem;
 	}
 </style>
