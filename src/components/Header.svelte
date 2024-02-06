@@ -16,11 +16,4 @@
 	p {
 		font-weight: 400;
 	}
-	header a {
-		color: #000;
-		text-decoration: none;
-	}
-	header a:hover {
-		text-decoration: underline;
-	}
 </style>

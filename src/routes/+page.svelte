@@ -54,4 +54,13 @@
 		text-transform: uppercase;
 		font-size: 1rem;
 	}
+
+	:global(a) {
+		color: black;
+		transition: opacity 0.4s ease;
+	}
+	:global(a:hover) {
+		opacity: 0.6;
+		text-decoration: underline;
+	}
 </style>
