@@ -1,6 +1,6 @@
 <script>
 	import Challenge from '../components/Challenge.svelte';
-	import Challenge1 from '../components/Challenge1.svelte';
+	import Challenge1 from '../components/Challenge1/Challenge1.svelte';
 	import Header from '../components/Header.svelte';
 	import Intro from '../components/Intro.svelte';
 </script>

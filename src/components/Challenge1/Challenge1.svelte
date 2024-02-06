@@ -2,11 +2,12 @@
 <!-- Credit for underlying Geojson file: Madison Giammaria -->
 <script>
 	import { geoPath, geoAlbers } from 'd3-geo';
-	import dataCounties from '../data/challenge01/counties_cleaned';
-	import data1870 from '../data/challenge01/data-1870_converted_corrected';
-	import data1880 from '../data/challenge01/data-1880_converted_corrected';
-	import colors from '../data/challenge01/colors';
+	import dataCounties from '../../data/challenge01/counties_cleaned';
+	import data1870 from '../../data/challenge01/data-1870_converted_corrected';
+	import data1880 from '../../data/challenge01/data-1880_converted_corrected';
+	import colors from '../../data/challenge01/colors';
 	import Tooltip from './Tooltip.svelte';
+	import { extractCountyName, getCountyNameFromIndex, getPopulationSizeFromIndex } from './helpers';
 
 	const projection = geoAlbers();
 	projection.fitSize([425, 450], dataCounties);
@@ -22,47 +23,11 @@
 			key: '1880',
 			label: 'Count in 1880',
 			dataset: data1880
-		},
-		{
-			key: 'relative',
-			label: 'Relative Change from 1870 to 1880',
-			dataset: data1870
 		}
 	];
 
 	$: hoveredCountyIndex = null;
 	$: selectedFilter = filterOptions[0];
-
-	function extractCountyName(nameWithNumber) {
-		return nameWithNumber.substring(0, nameWithNumber.length - 2);
-	}
-	function toTitleCase(str) {
-		return str.replace(/\w\S*/g, function (txt) {
-			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-		});
-	}
-
-	function getCountyNameFromIndex(index) {
-		if (index && dataCounties.features[index]) {
-			return toTitleCase(extractCountyName(dataCounties.features[index].properties.county));
-		}
-		return '';
-	}
-
-	function getPopulationSizeFromIndex(index, year) {
-		if (!index) {
-			return '';
-		}
-		const countyNameWithNumber = dataCounties.features[index].properties.county;
-		const countyName = extractCountyName(countyNameWithNumber);
-		let populationSize = 0;
-		if (year === '1870') {
-			populationSize = data1870[countyName].Population;
-		} else {
-			populationSize = data1880[countyName].Population;
-		}
-		return populationSize;
-	}
 
 	$: getCountyColor = function getColor(c) {
 		const countyNameWithNumber = c.properties.county;
@@ -92,7 +57,6 @@
 </script>
 
 <h2 class="headline">Negro Population of Georgia By Counties.</h2>
-
 <div class="filter">
 	<p>Color map by:</p>
 	{#each filterOptions as option}
@@ -121,7 +85,6 @@
 			{/each}
 		</g>
 	</svg>
-
 	<div class="legend">
 		{#each Object.values(colors) as color}
 			<p>
@@ -156,7 +119,6 @@
 		background-color: rgba(0, 0, 0, 0.7);
 		color: rgba(356, 356, 356, 0.8);
 	}
-
 	.legend span {
 		display: inline-block;
 		width: 15px;

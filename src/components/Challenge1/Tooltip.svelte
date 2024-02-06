@@ -1,10 +1,7 @@
 <script>
-	import colors from '../data/challenge01/colors';
+	import colors from '../../data/challenge01/colors';
 
 	export let data;
-
-	const nudgeX = 50;
-	const nudgeY = 25;
 
 	let color1870 = 'black';
 	let color1880 = 'black';
@@ -17,10 +14,7 @@
 </script>
 
 {#if data}
-	<div
-		class="tooltip"
-		style="position: absolute; top: {data.x + nudgeX}px; left: {data.y + nudgeY}px;"
-	>
+	<div class="tooltip" style="position: absolute; top: {data.x + 50}px; left: {data.y + 25}px;">
 		<p>{data.name}</p>
 		<div class="info">
 			<span>
@@ -60,7 +54,6 @@
 		position: absolute;
 		left: -8px;
 		width: 4px;
-		background-color: red;
 	}
 	span .bar.bar-top {
 		top: 0;
