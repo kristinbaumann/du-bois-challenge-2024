@@ -6,6 +6,7 @@
 	import data1870 from '../data/challenge01/data-1870_converted_corrected';
 	import data1880 from '../data/challenge01/data-1880_converted_corrected';
 	import colors from '../data/challenge01/colors';
+	import Tooltip from './Tooltip.svelte';
 
 	const projection = geoAlbers();
 	projection.fitSize([425, 450], dataCounties);
@@ -31,9 +32,6 @@
 
 	$: hoveredCountyIndex = null;
 	$: selectedFilter = filterOptions[0];
-
-	let tooltipX = 0;
-	let tooltipY = 0;
 
 	function extractCountyName(nameWithNumber) {
 		return nameWithNumber.substring(0, nameWithNumber.length - 2);
@@ -72,6 +70,24 @@
 		const dataset = selectedFilter.dataset;
 		const populationSize = dataset[countyName].Population;
 		return colors[populationSize].hex;
+	};
+
+	$: getTooltipData = function getData() {
+		if (!hoveredCountyIndex) {
+			return null;
+		}
+		const county = dataCounties.features[hoveredCountyIndex];
+		const centroid = drawCountyPath.centroid(county);
+
+		return {
+			x: centroid[1],
+			y: centroid[0],
+			name: getCountyNameFromIndex(hoveredCountyIndex),
+			values: {
+				'1870': getPopulationSizeFromIndex(hoveredCountyIndex, '1870'),
+				'1880': getPopulationSizeFromIndex(hoveredCountyIndex, '1880')
+			}
+		};
 	};
 </script>
 
@@ -115,24 +131,7 @@
 		{/each}
 	</div>
 </div>
-<!-- {#if hoveredCountyIndex} -->
-<div
-	class="tooltip"
-	style="position: absolute;
-	top: {tooltipX}px;
-	left: {tooltipY}px;"
->
-	<p>{getCountyNameFromIndex(hoveredCountyIndex)}</p>
-	<p></p>
-	<div class="info">
-		<span>Count in 1870: {getPopulationSizeFromIndex(hoveredCountyIndex, '1870')}</span>
-		<br />
-		<span>Count for 1880: {getPopulationSizeFromIndex(hoveredCountyIndex, '1880')} </span>
-	</div>
-	<span class="bar" />
-</div>
-
-<!-- {/if} -->
+<Tooltip data={getTooltipData()} />
 
 <style>
 	path {
@@ -175,23 +174,5 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-	}
-	.tooltip {
-		background: white;
-		box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.15);
-		padding: 8px;
-		border-radius: 3px;
-		pointer-events: none;
-		transition:
-			top 300ms ease,
-			left 300ms ease;
-	}
-	.tooltip .bar {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		height: 3px;
-		width: 100%;
-		background: black;
 	}
 </style>
