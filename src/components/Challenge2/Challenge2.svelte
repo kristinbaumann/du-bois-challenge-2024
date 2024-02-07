@@ -3,11 +3,12 @@
 	import { scaleLinear } from 'd3-scale';
 	import { path } from 'd3-path';
 	import { getPointsData } from './helpers.js';
+	import YAxis from './YAxis.svelte';
 
-	const width = 300;
+	const width = 500;
 	const height = 600;
 
-	const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+	const margin = { top: 50, right: 50, bottom: 10, left: 50 };
 	const innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 
@@ -41,6 +42,7 @@
 				<path d={drawPath(area)} class="slave" />
 			{/each}
 		</g>
+		<YAxis {xScale} {yScale} />
 	</g>
 </svg>
 
