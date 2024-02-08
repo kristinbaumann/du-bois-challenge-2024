@@ -2,11 +2,11 @@
 <script>
 	import { scaleLinear } from 'd3-scale';
 	import { path } from 'd3-path';
-	import { getPointsData } from './helpers.js';
+	import { getPointsData, drawWobblyLineArea } from './helpers.js';
 	import YAxis from './YAxis.svelte';
 	import XAxis from './XAxis.svelte';
 
-	const width = 700;
+	const width = 400;
 	const height = 600;
 
 	const margin = { top: 50, right: 100, bottom: 10, left: 80 };
@@ -18,6 +18,7 @@
 
 	const freeAreaPoints = getPointsData('free', xScale, yScale);
 	const slaveAreaPoints = getPointsData('slaves', xScale, yScale);
+	const wobblyData = drawWobblyLineArea(xScale, yScale);
 
 	function drawPath(set) {
 		const p = path();
@@ -43,15 +44,14 @@
 				<path d={drawPath(area)} class="slave" />
 			{/each}
 		</g>
+		<path d={wobblyData.area} class="wobblyArea" />
+		<path d={wobblyData.line} class="wobblyLine" />
 		<YAxis {xScale} {yScale} />
 		<XAxis {xScale} />
 	</g>
 </svg>
 
 <style>
-	svg {
-		background-color: lightgray;
-	}
 	path {
 		stroke: #e4cfbed9;
 	}
@@ -60,5 +60,14 @@
 	}
 	path.slave {
 		fill: black;
+	}
+	path.wobblyLine {
+		stroke: black;
+		fill: none;
+		stroke-width: 2px;
+	}
+	path.wobblyArea {
+		fill: #e8d7c8;
+		stroke: none;
 	}
 </style>

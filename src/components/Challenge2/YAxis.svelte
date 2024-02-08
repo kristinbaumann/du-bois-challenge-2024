@@ -33,7 +33,7 @@
 
 <style>
 	.tickLabel {
-		fill: green;
+		fill: black;
 	}
 	.axisLabel {
 		font-size: 0.7rem;

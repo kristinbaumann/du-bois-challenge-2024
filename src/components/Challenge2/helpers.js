@@ -1,4 +1,6 @@
 import data from '../../data/challenge02/data.js';
+import { randomInt } from 'd3-random';
+import { path } from 'd3-path';
 
 export function getPointsData(type, xScale, yScale) {
 	let pointsData = [];
@@ -46,4 +48,37 @@ export function getPointsData(type, xScale, yScale) {
 		}
 	}
 	return pointsData;
+}
+
+export function drawWobblyLineArea(xScale, yScale) {
+	let randomSet = [];
+	for (let i = 1; 1790 + i <= 1870; i += 1) {
+		randomSet.push({ x: xScale(3) + randomInt(-4, 5)(), y: yScale(1790 + i) });
+	}
+
+	// area
+	const area = path();
+	area.moveTo(xScale(3), yScale(1790));
+	for (let j = 0; j < randomSet.length; j++) {
+		const el = randomSet[j];
+		area.lineTo(el.x, el.y);
+	}
+
+	area.lineTo(xScale(3), yScale(1870 + 5)); // add extra space at the bottom to avoid overlap
+	area.lineTo(xScale(6), yScale(1870 + 5));
+	area.lineTo(xScale(6), yScale(1790 - 5)); // avoid overlap by using minus 5
+	area.closePath();
+
+	// line
+	const line = path();
+	line.moveTo(xScale(3), yScale(1790));
+	for (let k = 0; k < randomSet.length; k++) {
+		const el = randomSet[k];
+		line.lineTo(el.x, el.y);
+	}
+
+	return {
+		line: line.toString(),
+		area: area.toString()
+	};
 }

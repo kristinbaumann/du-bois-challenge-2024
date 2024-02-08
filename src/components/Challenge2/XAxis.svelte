@@ -13,9 +13,8 @@
 	.tickLabel {
 		text-anchor: middle;
 		dominant-baseline: auto;
-		fill: green;
 	}
 	.tick {
-		stroke: purple;
+		stroke: black;
 	}
 </style>
