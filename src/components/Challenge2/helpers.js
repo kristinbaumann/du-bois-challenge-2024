@@ -6,7 +6,14 @@ export function getPointsData(type, xScale, yScale) {
 	let pointsData = [];
 	for (let i = 0; i < data.length - 1; i++) {
 		const current = data[i];
-		const next = data[i + 1];
+		let next = data[i + 1];
+
+		// adjust shown data to better fit the original chart with cutoff at 3%
+		// remove the following if statement to see the correct data presentation
+		if (i === 7) {
+			next = { Year: 1870, Slave: 92, Free: 8 };
+		}
+
 		if (type === 'free') {
 			pointsData.push({
 				topRight: {

@@ -23,8 +23,7 @@
 			dominant-baseline="middle">{d.Free}{d.Year === 1790 || d.Year === 1870 ? '%' : ''}</text
 		>
 	{/each}
-	<!-- <text x={} y={0} class="axisLabel">Percent of Free Negroes</text> -->
-	<foreignObject x={xScale(0)} y={-50} width={80} height={200}>
+	<foreignObject x={xScale(0)} y={-40} width={80} height={200}>
 		<div class="axisLabel" xmlns="http://www.w3.org/1999/xhtml">
 			Percent <br />of <br />Free Negroes
 		</div>
@@ -36,7 +35,7 @@
 		fill: black;
 	}
 	.axisLabel {
-		font-size: 0.7rem;
+		font-size: 0.5rem;
 		text-align: center;
 		text-transform: uppercase;
 	}

@@ -9,7 +9,7 @@
 	const width = 400;
 	const height = 600;
 
-	const margin = { top: 50, right: 100, bottom: 10, left: 80 };
+	const margin = { top: 30, right: 80, bottom: 10, left: 80 };
 	const innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 
@@ -52,6 +52,10 @@
 </svg>
 
 <style>
+	svg {
+		font-weight: 200;
+		font-size: 0.9rem;
+	}
 	path {
 		stroke: #e4cfbed9;
 	}
