@@ -4,11 +4,12 @@
 	import { path } from 'd3-path';
 	import { getPointsData } from './helpers.js';
 	import YAxis from './YAxis.svelte';
+	import XAxis from './XAxis.svelte';
 
-	const width = 500;
+	const width = 700;
 	const height = 600;
 
-	const margin = { top: 50, right: 50, bottom: 10, left: 50 };
+	const margin = { top: 50, right: 100, bottom: 10, left: 80 };
 	const innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 
@@ -43,6 +44,7 @@
 			{/each}
 		</g>
 		<YAxis {xScale} {yScale} />
+		<XAxis {xScale} />
 	</g>
 </svg>
 
