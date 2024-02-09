@@ -9,7 +9,7 @@
 	const width = 400;
 	const height = 600;
 
-	const margin = { top: 30, right: 80, bottom: 10, left: 80 };
+	const margin = { top: 40, right: 80, bottom: 10, left: 80 };
 	const innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 
