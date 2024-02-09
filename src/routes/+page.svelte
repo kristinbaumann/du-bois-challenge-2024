@@ -1,6 +1,7 @@
 <script>
 	import Challenge from '../components/Challenge.svelte';
 	import Challenge1 from '../components/Challenge1/Challenge1.svelte';
+	import Challenge3 from '../components/Challenge3/Challenge3.svelte';
 	import Header from '../components/Header.svelte';
 	import Intro from '../components/Intro.svelte';
 </script>
@@ -12,6 +13,9 @@
 <section class="outer">
 	<Challenge number="1">
 		<Challenge1 />
+	</Challenge>
+	<Challenge number="3">
+		<Challenge3 />
 	</Challenge>
 </section>
 

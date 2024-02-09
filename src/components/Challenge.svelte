@@ -1,8 +1,10 @@
 <script>
 	import originalPlate06 from '$lib/assets/originals/original-plate-06.jpg';
+	import originalPlate19 from '$lib/assets/originals/original-plate-19.jpg';
 
 	const originals = {
-		1: originalPlate06
+		1: originalPlate06,
+		3: originalPlate19
 	};
 
 	export let number;
@@ -32,6 +34,7 @@
 		padding: 20px;
 		border-radius: 10px;
 		box-shadow: 0 0px 15px 0px rgba(0, 0, 0, 0.1);
+		margin: 0 0 30px;
 	}
 	.challenge-wrapper {
 		display: flex;
