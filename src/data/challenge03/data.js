@@ -44,7 +44,7 @@ const data = [
 		value: 765914.713
 	},
 	{
-		year: 1888,
+		year: 1886,
 		value: 785155.511
 	},
 	{
