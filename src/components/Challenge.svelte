@@ -1,9 +1,11 @@
 <script>
 	import originalPlate06 from '$lib/assets/originals/original-plate-06.jpg';
 	import originalPlate19 from '$lib/assets/originals/original-plate-19.jpg';
+	import originalPlate12 from '$lib/assets/originals/original-plate-12.jpg';
 
 	const originals = {
 		1: originalPlate06,
+		2: originalPlate12,
 		3: originalPlate19
 	};
 
@@ -39,23 +41,27 @@
 	.challenge-wrapper {
 		display: flex;
 		flex-direction: row;
+		align-items: flex-start;
 		justify-content: space-around;
-		column-gap: 25px;
+		column-gap: 5px;
 		flex-wrap: wrap;
 	}
 	.original {
-		max-width: 32%;
+		flex-shrink: 0;
 		flex-grow: 1;
+		flex-basis: 49%;
 	}
 	.recreation {
-		max-width: 66%;
+		flex-shrink: 0;
+		flex-grow: 1;
+		flex-basis: 49%;
 	}
 	@media (max-width: 1160px) {
 		.original {
-			max-width: 100%;
+			flex-basis: 100%;
 		}
 		.recreation {
-			max-width: 100%;
+			flex-basis: 100%;
 		}
 	}
 
@@ -71,5 +77,6 @@
 		border-radius: 10px;
 		padding: 20px;
 		position: relative;
+		aspect-ratio: 0.79;
 	}
 </style>

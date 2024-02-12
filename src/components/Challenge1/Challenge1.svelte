@@ -140,6 +140,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		column-gap: 25px;
 	}
 	@media (max-width: 1160px) {
 		.map-plus-legend {
