@@ -42,7 +42,7 @@
 		align-items: flex-start;
 		justify-content: space-around;
 		column-gap: 5px;
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 	}
 	.original {
 		flex-shrink: 0;
@@ -56,10 +56,10 @@
 	}
 	@media (max-width: 1160px) {
 		.original {
-			max-width: 100%;
+			flex-basis: 100%;
 		}
 		.recreation {
-			max-width: 100%;
+			flex-basis: 100%;
 		}
 	}
 
