@@ -10,7 +10,7 @@
 	export let value;
 
 	let currentValue = tweened(0, {
-		duration: 2000
+		duration: 500
 	});
 </script>
 
@@ -20,7 +20,7 @@
 	height={barHeight}
 	width={xScale($currentValue)}
 	use:inview={{
-		rootMargin: '-100px',
+		rootMargin: '-20px',
 		unobserveOnEnter: true
 	}}
 	on:inview_enter={() => {

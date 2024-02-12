@@ -6,7 +6,7 @@
 
 	import Bar from './Bar.svelte';
 
-	const height = 550;
+	const height = 645;
 	const width = 450;
 	const margin = {
 		top: 0,
@@ -53,6 +53,7 @@
 					y={yScale(i) + barHeight / 2}
 					text-anchor="middle"
 					dominant-baseline="middle"
+					dy={1}
 					class="valueLabel {d.year === 1874 || d.year === 1899 || hoveredIndex === i
 						? 'active'
 						: ''}">{format(',d')(d.value)}</text
@@ -66,6 +67,9 @@
 	svg {
 		display: block;
 		margin: auto;
+	}
+	.headline {
+		margin-bottom: 3px;
 	}
 	g.row {
 		cursor: pointer;
@@ -85,6 +89,7 @@
 		font-weight: 700;
 		pointer-events: none;
 		opacity: 0;
+		font-size: 0.7rem;
 	}
 	text.valueLabel.active {
 		opacity: 1;
