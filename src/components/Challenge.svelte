@@ -39,16 +39,20 @@
 	.challenge-wrapper {
 		display: flex;
 		flex-direction: row;
+		align-items: flex-start;
 		justify-content: space-around;
-		column-gap: 25px;
-		flex-wrap: wrap;
+		column-gap: 5px;
+		flex-wrap: nowrap;
 	}
 	.original {
-		max-width: 32%;
+		flex-shrink: 0;
 		flex-grow: 1;
+		flex-basis: 49%;
 	}
 	.recreation {
-		max-width: 66%;
+		flex-shrink: 0;
+		flex-grow: 1;
+		flex-basis: 49%;
 	}
 	@media (max-width: 1160px) {
 		.original {
@@ -71,5 +75,6 @@
 		border-radius: 10px;
 		padding: 20px;
 		position: relative;
+		aspect-ratio: 0.79;
 	}
 </style>

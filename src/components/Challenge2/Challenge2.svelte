@@ -6,7 +6,7 @@
 	import YAxis from './YAxis.svelte';
 	import XAxis from './XAxis.svelte';
 
-	const width = 400;
+	const width = 370;
 	const height = 600;
 
 	const margin = { top: 40, right: 80, bottom: 10, left: 80 };
@@ -53,6 +53,8 @@
 
 <style>
 	svg {
+		display: block;
+		margin: auto;
 		font-weight: 200;
 		font-size: 0.9rem;
 	}
