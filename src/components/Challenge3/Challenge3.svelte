@@ -4,6 +4,8 @@
 	import { max } from 'd3-array';
 	import { format } from 'd3-format';
 
+	import Bar from './Bar.svelte';
+
 	const height = 550;
 	const width = 450;
 	const margin = {
@@ -36,7 +38,7 @@
 		{#each data as d, i}
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<g class="row" on:mouseover={() => (hoveredIndex = i)} on:focus={() => (hoveredIndex = i)}>
-				<rect x={xScale(0)} y={yScale(i)} height={barHeight} width={xScale(d.value)} />
+				<Bar {xScale} {yScale} {barHeight} index={i} value={d.value} />
 				<text
 					x={xScale(0)}
 					y={yScale(i) + barHeight / 2}
@@ -46,7 +48,6 @@
 					dominant-baseline="middle"
 					class="yearLabel {hoveredIndex === i ? 'active' : ''}">{d.year}</text
 				>
-				<!-- {#if d.year === 1874 || d.year === 1899 || i === hoveredIndex} -->
 				<text
 					x={xScale(d.value) / 2}
 					y={yScale(i) + barHeight / 2}
@@ -56,7 +57,6 @@
 						? 'active'
 						: ''}">{format(',d')(d.value)}</text
 				>
-				<!-- {/if} -->
 			</g>
 		{/each}
 	</g>
@@ -70,13 +70,7 @@
 	g.row {
 		cursor: pointer;
 	}
-	rect {
-		fill: #d22a49;
-		transition: all 0.5s ease;
-	}
-	rect:hover {
-		fill-opacity: 0.6;
-	}
+
 	text {
 		font-size: 0.6rem;
 		transition: all 0.5s ease;
