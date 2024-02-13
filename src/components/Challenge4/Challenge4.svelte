@@ -7,8 +7,9 @@
 
 	import worldData from '../../data/challenge04/land-110m.json';
 	import countriesData from '../../data/challenge04/countries-110m.json';
+	import polygonLayers from '../../data/challenge04/layer_export2.json';
 
-	import polygonLayers from '../../data/challenge04/layer_export1.json';
+	console.log(polygonLayers);
 
 	const projection = geoInterruptedMollweideHemispheres();
 
@@ -43,9 +44,9 @@
 		<g clip-path="url({'http://localhost:5173/#clip'})">
 			<use xlink:href="http://localhost:5173/#outline" fill="#dcba9e" />
 			<path d={path(land)} class="world" />
-			<!-- {#each layers as l} -->
-			<path d={path(polygonLayers)} class="layers" />
-			<!-- {/each} -->
+			{#each polygonLayers.features as layer}
+				<path d={path(layer)} class="layers {layer.properties.type}" />
+			{/each}
 			{#each Object.values(countries.features) as l}
 				{#if l.properties.name === 'Angola'}
 					<path d={path(l)} class="country" />
@@ -81,19 +82,20 @@
 	path.world {
 		fill: #e3ae5f;
 		stroke: #333;
-		stroke-opacity: 0.5;
+		stroke-opacity: 0.3;
 	}
 	path.country {
 		fill: pink;
 	}
 	path.outline {
 		stroke: #333;
-		stroke-opacity: 0.5;
+		stroke-opacity: 0.3;
 		stroke-width: 1px;
 	}
-	path.layers {
-		/* stroke: red; */
-		/* fill: none; */
+	path.layers.dark {
 		fill: #151211;
+	}
+	path.layers.light {
+		fill: #956c56;
 	}
 </style>
