@@ -6,17 +6,13 @@
 	import { feature } from 'topojson-client';
 
 	import worldData from '../../data/challenge04/land-110m.json';
-	import countriesData from '../../data/challenge04/countries-110m.json';
-	import polygonLayers from '../../data/challenge04/layer_export2.json';
-
-	console.log(polygonLayers);
+	import polygonLayers from '../../data/challenge04/layer_export.json';
 
 	const projection = geoInterruptedMollweideHemispheres();
 
 	const width = 500;
 
 	const land = feature(worldData, worldData.objects.land);
-	const countries = feature(countriesData, countriesData.objects.countries);
 
 	const outline = {
 		type: 'Sphere'
@@ -46,11 +42,6 @@
 			<path d={path(land)} class="world" />
 			{#each polygonLayers.features as layer}
 				<path d={path(layer)} class="layers {layer.properties.type}" />
-			{/each}
-			{#each Object.values(countries.features) as l}
-				{#if l.properties.name === 'Angola'}
-					<path d={path(l)} class="country" />
-				{/if}
 			{/each}
 		</g>
 
