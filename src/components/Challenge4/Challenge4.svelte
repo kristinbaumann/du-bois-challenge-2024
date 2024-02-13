@@ -1,3 +1,5 @@
+<!-- inspired by https://observablehq.com/@d3/world-map-svg -->
+
 <script>
 	import { geoInterruptedMollweideHemispheres } from 'd3-geo-projection';
 	import { geoPath } from 'd3-geo';
@@ -5,6 +7,8 @@
 
 	import worldData from '../../data/challenge04/land-110m.json';
 	import countriesData from '../../data/challenge04/countries-110m.json';
+
+	import polygonLayers from '../../data/challenge04/layer_export1.json';
 
 	const projection = geoInterruptedMollweideHemispheres();
 
@@ -39,6 +43,9 @@
 		<g clip-path="url({'http://localhost:5173/#clip'})">
 			<use xlink:href="http://localhost:5173/#outline" fill="#dcba9e" />
 			<path d={path(land)} class="world" />
+			<!-- {#each layers as l} -->
+			<path d={path(polygonLayers)} class="layers" />
+			<!-- {/each} -->
 			{#each Object.values(countries.features) as l}
 				{#if l.properties.name === 'Angola'}
 					<path d={path(l)} class="country" />
@@ -77,14 +84,16 @@
 		stroke-opacity: 0.5;
 	}
 	path.country {
-		fill: #333;
+		fill: pink;
 	}
 	path.outline {
 		stroke: #333;
 		stroke-opacity: 0.5;
 		stroke-width: 1px;
 	}
-	path.line {
-		stroke: red;
+	path.layers {
+		/* stroke: red; */
+		/* fill: none; */
+		fill: #151211;
 	}
 </style>
