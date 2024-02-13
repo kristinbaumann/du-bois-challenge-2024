@@ -6,7 +6,10 @@
 	import { feature } from 'topojson-client';
 
 	import worldData from '../../data/challenge04/land-110m.json';
-	import polygonLayers from '../../data/challenge04/layer_export.json';
+	import polygonLayers from '../../data/challenge04/polygon_export.json';
+	import lineLayers from '../../data/challenge04/lines_export.json';
+	import pointLayer from '../../data/challenge04/points_export.json';
+	import star from '$lib/assets/star.svg';
 
 	const projection = geoInterruptedMollweideHemispheres();
 
@@ -26,6 +29,9 @@
 	}
 	const height = getHeight();
 	const path = geoPath(projection);
+
+	const georgiaLocation = projection(pointLayer.features[0].geometry.coordinates);
+	const markerSize = 9;
 </script>
 
 <div class="wrapper">
@@ -43,6 +49,17 @@
 			{#each polygonLayers.features as layer}
 				<path d={path(layer)} class="layers {layer.properties.type}" />
 			{/each}
+			{#each lineLayers.features as layer}
+				<path d={path(layer)} class="lines" />
+			{/each}
+			<image
+				href={star}
+				height={markerSize}
+				width={markerSize}
+				x={georgiaLocation[0] - markerSize / 2 - 1}
+				y={georgiaLocation[1] - markerSize / 2 - 1}
+				dx={-2}
+			/>
 		</g>
 
 		<use xlink:href={'http://localhost:5173/#outline'} fill="none" stroke="#000" />
@@ -75,9 +92,6 @@
 		stroke: #333;
 		stroke-opacity: 0.3;
 	}
-	path.country {
-		fill: pink;
-	}
 	path.outline {
 		stroke: #333;
 		stroke-opacity: 0.3;
@@ -88,5 +102,9 @@
 	}
 	path.layers.light {
 		fill: #956c56;
+	}
+	path.lines {
+		fill: none;
+		stroke: #333;
 	}
 </style>
