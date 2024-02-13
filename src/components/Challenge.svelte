@@ -44,7 +44,7 @@
 		align-items: flex-start;
 		justify-content: space-around;
 		column-gap: 5px;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 	}
 	.original {
 		flex-shrink: 0;
