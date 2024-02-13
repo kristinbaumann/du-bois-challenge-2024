@@ -3,13 +3,16 @@
 	import { geoPath } from 'd3-geo';
 	import { feature } from 'topojson-client';
 
-	import world from '../../data/challenge04/land-50m.json';
+	import worldData from '../../data/challenge04/land-110m.json';
+	import countriesData from '../../data/challenge04/countries-110m.json';
 
 	const projection = geoInterruptedMollweideHemispheres();
 
 	const width = 500;
 
-	const land = feature(world, world.objects.land);
+	const land = feature(worldData, worldData.objects.land);
+	const countries = feature(countriesData, countriesData.objects.countries);
+
 	const outline = {
 		type: 'Sphere'
 	};
@@ -30,13 +33,19 @@
 	</h2>
 	<svg {height} {width} style="display: block;">
 		<defs>
-			<path id="outline" d={path(outline)} />
+			<path id="outline" d={path(outline)} class="outline" />
 			<clipPath id="clip"><use xlink:href={'http://localhost:5173/#outline'} /></clipPath>
 		</defs>
 		<g clip-path="url({'http://localhost:5173/#clip'})">
 			<use xlink:href="http://localhost:5173/#outline" fill="#dcba9e" />
-			<path d={path(land)}></path>
+			<path d={path(land)} class="world" />
+			{#each Object.values(countries.features) as l}
+				{#if l.properties.name === 'Angola'}
+					<path d={path(l)} class="country" />
+				{/if}
+			{/each}
 		</g>
+
 		<use xlink:href={'http://localhost:5173/#outline'} fill="none" stroke="#000" />
 	</svg>
 
@@ -61,5 +70,21 @@
 	p {
 		text-align: center;
 		font-size: 0.7rem;
+	}
+	path.world {
+		fill: #e3ae5f;
+		stroke: #333;
+		stroke-opacity: 0.5;
+	}
+	path.country {
+		fill: #333;
+	}
+	path.outline {
+		stroke: #333;
+		stroke-opacity: 0.5;
+		stroke-width: 1px;
+	}
+	path.line {
+		stroke: red;
 	}
 </style>
