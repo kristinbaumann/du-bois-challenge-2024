@@ -1,10 +1,12 @@
 <script>
 	import originalPlate06 from '$lib/assets/originals/original-plate-06.jpg';
+	import originalPlate19 from '$lib/assets/originals/original-plate-19.jpg';
 	import originalPlate12 from '$lib/assets/originals/original-plate-12.jpg';
 
 	const originals = {
 		1: originalPlate06,
-		2: originalPlate12
+		2: originalPlate12,
+		3: originalPlate19
 	};
 
 	export let number;
