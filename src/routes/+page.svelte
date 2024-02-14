@@ -1,9 +1,26 @@
 <script>
 	import Challenge from '../components/Challenge.svelte';
-	import Challenge1 from '../components/Challenge1/Challenge1.svelte';
-	import Challenge2 from '../components/Challenge2/Challenge2.svelte';
 	import Header from '../components/Header.svelte';
 	import Intro from '../components/Intro.svelte';
+	import {
+		PUBLIC_MAX_SHOWN_CHALLENGE_DEV,
+		PUBLIC_MAX_SHOWN_CHALLENGE_PROD
+	} from '$env/static/public';
+	import { dev } from '$app/environment';
+	import { onMount } from 'svelte';
+
+	const maxShownChallenge = Number(
+		dev ? PUBLIC_MAX_SHOWN_CHALLENGE_DEV : PUBLIC_MAX_SHOWN_CHALLENGE_PROD
+	);
+
+	let ComponentsArray = [];
+	onMount(async () => {
+		for (let i = 1; i <= maxShownChallenge; i++) {
+			ComponentsArray[i] = (
+				await import(`../components/Challenge${i}/Challenge${i}.svelte`)
+			).default;
+		}
+	});
 </script>
 
 <Header />
@@ -11,12 +28,11 @@
 	<Intro />
 </section>
 <section class="outer">
-	<Challenge number="1">
-		<Challenge1 />
-	</Challenge>
-	<Challenge number="2">
-		<Challenge2 />
-	</Challenge>
+	{#each Array(maxShownChallenge) as _, j}
+		<Challenge number={j + 1}>
+			<svelte:component this={ComponentsArray[j + 1]}></svelte:component>
+		</Challenge>
+	{/each}
 </section>
 
 <svelte:head>
