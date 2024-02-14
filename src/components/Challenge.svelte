@@ -2,11 +2,13 @@
 	import originalPlate06 from '$lib/assets/originals/original-plate-06.jpg';
 	import originalPlate19 from '$lib/assets/originals/original-plate-19.jpg';
 	import originalPlate12 from '$lib/assets/originals/original-plate-12.jpg';
+	import originalPlate1 from '$lib/assets/originals/original-plate-01.jpg';
 
 	const originals = {
 		1: originalPlate06,
 		2: originalPlate12,
-		3: originalPlate19
+		3: originalPlate19,
+		4: originalPlate1
 	};
 
 	export let number;
@@ -44,7 +46,7 @@
 		align-items: flex-start;
 		justify-content: space-around;
 		column-gap: 5px;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 	}
 	.original {
 		flex-shrink: 0;
