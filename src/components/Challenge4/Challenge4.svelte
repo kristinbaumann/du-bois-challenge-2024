@@ -10,9 +10,9 @@
 	import polygonLayers from '../../data/challenge04/polygon_export.json';
 	import lineLayers from '../../data/challenge04/lines_export.json';
 	import pointLayer from '../../data/challenge04/points_export.json';
-	import star from '$lib/assets/star.svg';
-	import starCircle from '$lib/assets/star-circle.svg';
-	import lines from '$lib/assets/lines.svg';
+	import star from '$lib/assets/images/star.svg';
+	import starCircle from '$lib/assets/images/star-circle.svg';
+	import lines from '$lib/assets/images/lines.svg';
 
 	const width = 500;
 	const margin = {
