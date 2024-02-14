@@ -11,6 +11,8 @@
 	import lineLayers from '../../data/challenge04/lines_export.json';
 	import pointLayer from '../../data/challenge04/points_export.json';
 	import star from '$lib/assets/star.svg';
+	import starCircle from '$lib/assets/star-circle.svg';
+	import lines from '$lib/assets/lines.svg';
 
 	const width = 500;
 	const margin = {
@@ -58,72 +60,94 @@
 
 <div class="wrapper">
 	<h2 class="headline">
-		The Georgio Negro.<br />A social study<br />By<br />W. E. Burghardt Du Bois.
+		<span>The Georgio Negro.</span><br />
+		<span class="subtitle">A social study<br />By<br />W. E. Burghardt Du Bois.</span>
 	</h2>
-	<svg {height} {width} style="display: block;">
-		<g transform="translate({margin.left},{margin.top})">
-			<defs>
-				<path id="outline" d={getPath(outline)} class="outline" />
-				<clipPath id="clip"><use xlink:href="#outline" /></clipPath>
-			</defs>
-			<g clip-path="url({'#clip'})">
-				<!-- background world -->
-				<use href="#outline" fill="#dcba9e" />
-				<!-- world -->
-				<path d={getPath(land)} class="world" />
-				<!-- polygons in America and Africa -->
-				{#each polygonLayers.features as layer}
-					<path d={getPath(layer)} class="layers {layer.properties.type}" />
-				{/each}
-				<!-- lines between continents -->
-				{#each lineLayers.features as layer}
-					<path d={getPath(layer)} class="lines" />
-				{/each}
-				<!-- marker -->
-				<image
-					href={star}
-					height={markerSize}
-					width={markerSize}
-					x={georgiaLocation[0] - markerSize / 2 - 1}
-					y={georgiaLocation[1] - markerSize / 2 - 1}
-					dx={-2}
-				/>
+	<div>
+		<svg {height} {width} style="display: block;">
+			<g transform="translate({margin.left},{margin.top})">
+				<defs>
+					<path id="outline" d={getPath(outline)} class="outline" />
+					<clipPath id="clip"><use xlink:href="#outline" /></clipPath>
+				</defs>
+				<g clip-path="url({'#clip'})">
+					<!-- background world -->
+					<use href="#outline" fill="#dcba9e" />
+					<!-- world -->
+					<path d={getPath(land)} class="world" />
+					<!-- polygons in America and Africa -->
+					{#each polygonLayers.features as layer}
+						<path d={getPath(layer)} class="layers {layer.properties.type}" />
+					{/each}
+					<!-- lines between continents -->
+					{#each lineLayers.features as layer}
+						<path d={getPath(layer)} class="lines" />
+					{/each}
+					<!-- marker -->
+					<image
+						href={star}
+						height={markerSize}
+						width={markerSize}
+						x={georgiaLocation[0] - markerSize / 2 - 1}
+						y={georgiaLocation[1] - markerSize / 2 - 1}
+						dx={-2}
+					/>
+				</g>
+				<!-- outline around two circles -->
+				<use href="#outline" fill="none" stroke="#000" />
 			</g>
-			<!-- outline around two circles -->
-			<use href="#outline" fill="none" stroke="#000" />
-		</g>
-		<g transform="translate({margin.left + radius},{margin.top + radius})">
-			<defs>
-				<path d={getCircleTextPathLeft()} id="text-path-left-circle" stroke="red" fill="none" />
-			</defs>
-			<text
-				><textPath
-					href="#text-path-left-circle"
-					class="circle-text"
-					startOffset="45%"
-					text-anchor="middle">Distribution of</textPath
-				></text
-			>
-		</g>
-		<g transform="translate({margin.left + 3 * radius},{margin.top + radius})">
-			<defs>
-				<path d={getCircleTextPathRight()} id="text-path-right-circle" stroke="red" fill="none" />
-			</defs>
-			<text
-				><textPath
-					href="#text-path-right-circle"
-					class="circle-text"
-					startOffset="55%"
-					text-anchor="middle">the negro race</textPath
-				></text
-			>
-		</g>
-	</svg>
+			<!-- text on circles -->
+			<g>
+				<g transform="translate({margin.left + radius},{margin.top + radius})">
+					<defs>
+						<path d={getCircleTextPathLeft()} id="text-path-left-circle" stroke="red" fill="none" />
+					</defs>
+					<text
+						><textPath
+							href="#text-path-left-circle"
+							class="circle-text"
+							startOffset="45%"
+							text-anchor="middle">Distribution of</textPath
+						></text
+					>
+				</g>
+				<g transform="translate({margin.left + 3 * radius},{margin.top + radius})">
+					<defs>
+						<path
+							d={getCircleTextPathRight()}
+							id="text-path-right-circle"
+							stroke="red"
+							fill="none"
+						/>
+					</defs>
+					<text
+						><textPath
+							href="#text-path-right-circle"
+							class="circle-text"
+							startOffset="55%"
+							text-anchor="middle">the negro race</textPath
+						></text
+					>
+				</g>
+			</g>
+		</svg>
+		<div class="legend">
+			<div>
+				<img src={lines} alt="" />
+				<span>Routes of the african slave trade</span>
+			</div>
+			<div>
+				<img src={starCircle} alt="" />
+				<span>The state of Georgia</span>
+			</div>
+		</div>
+	</div>
 
-	<p>
+	<p class="fine-print">
 		THIS CASE IS DEVOTED TO THE SERIES OF CHARTS,MAPS, AND OTHER DEVI-<br /> CES DESIGNED TO
 		ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A <br />SINGLE TYPICAL STATE OF THE UNITED
-		STATES
+		STATES.<br /><br />
+		"The problem of the 20th Century is the the problem of the<br /> color-line."
 	</p>
 </div>
 
@@ -166,5 +190,37 @@
 		fill: #333;
 		font-size: 0.5rem;
 		text-transform: uppercase;
+	}
+	.headline {
+		margin-bottom: 75px;
+	}
+	.headline span.subtitle {
+		font-weight: 400;
+		font-size: 0.8rem;
+	}
+	p,
+	.legend span {
+		text-transform: uppercase;
+		font-size: 0.8rem;
+		font-weight: 200;
+	}
+	.legend {
+		margin: 15px auto 0;
+		width: 270px;
+	}
+	.legend div {
+		display: flex;
+		margin-bottom: 10px;
+	}
+	.legend div span {
+		display: block;
+	}
+	.legend img {
+		height: 14px;
+		margin-right: 10px;
+		margin-top: 2px;
+	}
+	.fine-print {
+		margin-bottom: 60px;
 	}
 </style>
