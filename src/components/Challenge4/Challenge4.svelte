@@ -194,10 +194,6 @@
 	.headline {
 		margin-bottom: 75px;
 	}
-	.headline span.subtitle {
-		font-weight: 400;
-		font-size: 0.8rem;
-	}
 	p,
 	.legend span {
 		text-transform: uppercase;

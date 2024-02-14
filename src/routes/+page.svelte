@@ -85,4 +85,8 @@
 		opacity: 0.6;
 		text-decoration: underline;
 	}
+	:global(.headline span.subtitle) {
+		font-weight: 400;
+		font-size: 0.8rem;
+	}
 </style>
