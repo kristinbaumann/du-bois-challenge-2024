@@ -3,6 +3,8 @@
 	import { fade } from 'svelte/transition';
 	import { inview } from 'svelte-inview';
 
+	import { patterns } from '$lib/assets/images/patterns.js';
+
 	export let yScale;
 	export let barWidth;
 	export let data;
@@ -29,7 +31,17 @@
 		$currentValue = d.value;
 	}}
 >
-	<rect x={0} y={0} width={barWidth} height={yScale($currentValue)} />
+	<defs>
+		<pattern
+			id="pattern-{d.type}"
+			patternUnits="userSpaceOnUse"
+			width={barWidth}
+			height={yScale(d.value)}
+		>
+			<image href={patterns[d.type]} x="0" y="0" width="408" height="612" />
+		</pattern>
+	</defs>
+	<rect x={0} y={0} width={barWidth} height={yScale($currentValue)} fill="url(#pattern-{d.type})" />
 	{#if inView}
 		<g transition:fade={{ delay: 350, duration: 1000 }}>
 			<text x={barWidth / 2} y={yScale(d.value) / 2} class="valueLabel">{d.value}%</text>
@@ -56,15 +68,12 @@
 		fill: darkred;
 	}
 	.black rect {
-		fill: #000;
 		stroke: #000;
 	}
 	.brown rect {
-		fill: #3a2117;
 		stroke: #3a2117;
 	}
 	.yellow rect {
-		fill: #f9ba00;
 		stroke: #f9ba00;
 	}
 	.typeLabel {

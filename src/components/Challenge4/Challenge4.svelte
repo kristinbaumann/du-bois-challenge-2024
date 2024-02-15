@@ -144,7 +144,7 @@
 	</div>
 
 	<p class="fine-print">
-		THIS CASE IS DEVOTED TO THE SERIES OF CHARTS,MAPS, AND OTHER DEVI-<br /> CES DESIGNED TO
+		THIS CASE IS DEVOTED TO A SERIES OF CHARTS,MAPS, AND OTHER DEVI-<br /> CES DESIGNED TO
 		ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A <br />SINGLE TYPICAL STATE OF THE UNITED
 		STATES.<br /><br />
 		"The problem of the 20th Century is the the problem of the<br /> color-line."
