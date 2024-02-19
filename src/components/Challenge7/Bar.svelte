@@ -20,6 +20,7 @@
 	y={yScale(index)}
 	height={barHeight}
 	width={xScale($currentValue)}
+	fill="url(#pattern-green-{index})"
 	use:inview={{
 		rootMargin: '-20px',
 		unobserveOnEnter: true
@@ -32,7 +33,7 @@
 
 <style>
 	rect {
-		fill: #1e7c4d;
+		/* fill: #1e7c4d; */
 		stroke: black;
 		stroke-width: 0.5px;
 		transition: all 0.5s ease;

@@ -13,8 +13,10 @@ the illteracy points.
 
 <script>
 	import { scaleLinear } from 'd3-scale';
+	import { randomInt } from 'd3-random';
 	import data from '../../data/challenge07/data.js';
 	import Bar from './Bar.svelte';
+	import markerGreen from '$lib/assets/images/marker_green.png';
 
 	const height = 520;
 	const width = 500;
@@ -40,6 +42,20 @@ the illteracy points.
 	<p>Done by Atlanta University.</p>
 </h2>
 <svg {width} {height}>
+	<defs>
+		{#each data as d, i}
+			<pattern
+				id="pattern-green-{i}"
+				patternUnits="userSpaceOnUse"
+				width={yScale(73)}
+				height={barHeight}
+				patternTransform="translate(-{20 * randomInt(10)()},0)"
+				preserveAspectRatio="xMinYMid"
+			>
+				<image href={markerGreen} x="0" y="0" width="589" height="155" />
+			</pattern>
+		{/each}
+	</defs>
 	<g transform="translate({margin.left}, {margin.top})">
 		{#each data as d, i}
 			<text x={-margin.left} y={yScale(i) + barHeight / 2} dominant-baseline="central"
