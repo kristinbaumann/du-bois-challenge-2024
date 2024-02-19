@@ -17,6 +17,7 @@ the illteracy points.
 	import data from '../../data/challenge07/data.js';
 	import Bar from './Bar.svelte';
 	import markerGreen from '$lib/assets/images/marker_green.png';
+	import markerRed from '$lib/assets/images/marker_red.png';
 
 	const height = 520;
 	const width = 500;
@@ -43,6 +44,7 @@ the illteracy points.
 </h2>
 <svg {width} {height}>
 	<defs>
+		<!-- multiple green marker pattern -->
 		{#each data as d, i}
 			<pattern
 				id="pattern-green-{i}"
@@ -55,6 +57,10 @@ the illteracy points.
 				<image href={markerGreen} x="0" y="0" width="589" height="155" />
 			</pattern>
 		{/each}
+		<!-- red marker pattern -->
+		<pattern id="pattern-red" patternUnits="userSpaceOnUse" width={yScale(56)} height={barHeight}>
+			<image href={markerRed} x="0" y="0" width="1274" height="259" />
+		</pattern>
 	</defs>
 	<g transform="translate({margin.left}, {margin.top})">
 		{#each data as d, i}

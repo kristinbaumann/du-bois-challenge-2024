@@ -33,13 +33,12 @@
 
 <style>
 	rect {
-		/* fill: #1e7c4d; */
 		stroke: black;
 		stroke-width: 0.5px;
 		transition: all 0.5s ease;
 	}
 	rect.highlight {
-		fill: #c31f3d;
+		fill: url(#pattern-red);
 	}
 	rect:hover {
 		fill-opacity: 0.6;
