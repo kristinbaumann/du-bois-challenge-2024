@@ -74,4 +74,8 @@
 	#challenge6 .recreation-wrapper {
 		padding: 5px 0 0;
 	}
+	#challenge8 .recreation-wrapper {
+		padding: 5px 0 0;
+		aspect-ratio: 0.74;
+	}
 </style>
