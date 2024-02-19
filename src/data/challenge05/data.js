@@ -18,7 +18,7 @@ const data = [
 	{
 		type: 'yellow',
 		value: 16,
-		label: ['ie. persons with', 'more with white than', 'negro blood']
+		label: ['ie. persons with', 'more white than', 'negro blood']
 	}
 ];
 export default data;
