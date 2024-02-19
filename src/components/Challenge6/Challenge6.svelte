@@ -1,6 +1,7 @@
 <script>
 	import { scaleLinear } from 'd3-scale';
 	import { path } from 'd3-path';
+	import { randomUniform } from 'd3-random';
 
 	const data = [
 		{
@@ -19,56 +20,64 @@
 	const height = 620;
 	const margin = {
 		top: 40,
-		right: 0,
+		right: 1,
 		bottom: 25,
 		left: 0
 	};
 	const innerHeight = height - margin.top - margin.bottom;
 	const innerWidth = width - margin.left - margin.right;
 
+	// width black over the years (estimated)
+	const wBlack = {
+		1800: 50,
+		1840: 81,
+		1860: 100,
+		1890: 83
+	};
+
+	// width for 1890 (hand measured using plotdigitizer.com)
 	const wWhite = 24;
 	const wLightYellow = 8;
 	const wDarkYellow = 7.5;
 	const wBrown = 10;
-	const wBlack = 83;
-	const wSum = wWhite + wLightYellow + wDarkYellow + wBrown + wBlack;
-
-	const xPercFactor1890 = 6337980 / 84;
+	const wSum = wWhite + wLightYellow + wDarkYellow + wBrown + wBlack[1890];
+	// factor for 1890
+	const xPercFact = data[0].negroes / wBlack[1890];
 
 	// x scale from right to left
 	const xScale = scaleLinear()
-		.domain([0, xPercFactor1890 * wSum])
+		.domain([0, xPercFact * wSum])
 		.range([innerWidth, 0]);
 
 	// y scale from top to bottom (not based on years to recreate skewed axis)
 	const yScale = scaleLinear().domain([1, 4]).range([0, innerHeight]);
+	const minY = 0.92;
 
 	/**
 	 * pre-calculated points
 	 */
-	const y1890 = yScale(4);
 	// > black
 	const xBlackLeft1890 =
 		innerWidth -
-		xScale(xPercFactor1890 * (wSum - wWhite - wLightYellow - wDarkYellow - wBrown - wBlack));
-	const xBlackLeft1860 = innerWidth - xScale(xPercFactor1890 * 30);
-	const xBlackLeft1840 = innerWidth - xScale(xPercFactor1890 * 50);
-	const xBlackLeft1800 = innerWidth - xScale(xPercFactor1890 * 80);
+		xScale(xPercFact * (wSum - wWhite - wLightYellow - wDarkYellow - wBrown - wBlack[1890]));
+	const xBlackLeft1860 = innerWidth - xScale(xPercFact * (wSum - wBlack[1860]));
+	const xBlackLeft1840 = innerWidth - xScale(xPercFact * (wSum - wBlack[1840]));
+	const xBlackLeft1800 = innerWidth - xScale(xPercFact * (wSum - wBlack[1800]));
 	// > brown
 	const xBrownLeft1890 =
-		innerWidth - xScale(xPercFactor1890 * (wSum - wWhite - wLightYellow - wDarkYellow - wBrown));
+		innerWidth - xScale(xPercFact * (wSum - wWhite - wLightYellow - wDarkYellow - wBrown));
 	// > dark yellow
 	const xDarkYellowLeft1890 =
-		innerWidth - xScale(xPercFactor1890 * (wSum - wWhite - wLightYellow - wDarkYellow));
+		innerWidth - xScale(xPercFact * (wSum - wWhite - wLightYellow - wDarkYellow));
 	// > light yellow
-	const xLightYellowLeft1890 =
-		innerWidth - xScale(xPercFactor1890 * (wSum - wWhite - wLightYellow));
+	const xLightYellowLeft1890 = innerWidth - xScale(xPercFact * (wSum - wWhite - wLightYellow));
 	// > white
-	const xWhiteLeft1890 = innerWidth - xScale(xPercFactor1890 * (wSum - wWhite));
+	const xWhiteLeft1890 = innerWidth - xScale(xPercFact * (wSum - wWhite));
+
 	// > tip of the triangles, in 1800, same as meeting point between brown and dark yellow in 1890
 	const triangleTip = {
 		x: xDarkYellowLeft1890,
-		y: yScale(1)
+		y: minY
 	};
 
 	/**
@@ -79,8 +88,8 @@
 	function drawPathBrown() {
 		const pa = path();
 		pa.moveTo(triangleTip.x, triangleTip.y);
-		pa.lineTo(triangleTip.x, y1890);
-		pa.lineTo(xBrownLeft1890, y1890);
+		pa.lineTo(triangleTip.x, yScale(4));
+		pa.lineTo(xBrownLeft1890, yScale(4));
 		pa.closePath();
 		return pa.toString();
 	}
@@ -88,8 +97,8 @@
 	function drawPathDarkYellow() {
 		const pa = path();
 		pa.moveTo(triangleTip.x, triangleTip.y);
-		pa.lineTo(triangleTip.x, y1890);
-		pa.lineTo(xLightYellowLeft1890, y1890);
+		pa.lineTo(triangleTip.x, yScale(4));
+		pa.lineTo(xLightYellowLeft1890, yScale(4));
 		pa.closePath();
 		return pa.toString();
 	}
@@ -97,23 +106,73 @@
 	function drawPathLightYellow() {
 		const pa = path();
 		pa.moveTo(triangleTip.x, triangleTip.y);
-		pa.lineTo(xLightYellowLeft1890, y1890);
-		pa.lineTo(xWhiteLeft1890, y1890);
+		pa.lineTo(xLightYellowLeft1890, yScale(4));
+		pa.lineTo(xWhiteLeft1890, yScale(4));
 		pa.closePath();
 		return pa.toString();
 	}
 	// > black counter clock wise
 	function drawPathBlack() {
 		const pa = path();
-		pa.moveTo(triangleTip.x, triangleTip.y); // start at triangle tip
+		pa.moveTo(triangleTip.x, yScale(minY + 0.03)); // start at triangle tip
 		pa.lineTo(xBlackLeft1800, yScale(1)); // to left in 1800
 		pa.lineTo(xBlackLeft1840, yScale(2)); // to down left in 1840
 		pa.lineTo(xBlackLeft1860, yScale(3)); // to down left in 1860
-		pa.lineTo(xBlackLeft1890, y1890); // to down left in 1890
-		pa.lineTo(xBrownLeft1890, y1890); // to right in 1890
+		pa.lineTo(xBlackLeft1890, yScale(4)); // to down left in 1890
+		pa.lineTo(xBrownLeft1890, yScale(4)); // to right in 1890
 		pa.closePath(); // back up to triangle tip
 		return pa.toString();
 	}
+	// > fuzzy line and area
+	function drawFuzzyElements() {
+		let randomSet = [];
+		const minX = xBlackLeft1800;
+		const maxX = xScale(400000); // arbitrary value for fuzzy line ending
+		const maxY = 1; // further above we have minY = 0.92
+		const step = 1;
+		let y;
+		let counter = 1;
+		let breakpoint = 45; // breakpoint is the x value where the fuzzy line hits the triangle start
+		for (let x = minX; x + step <= maxX; x += step) {
+			const randomNumber = randomUniform(-2, 2)();
+			// beginning of fuzzy line til triangle tip
+			if (x < minX + breakpoint) {
+				// y increases from minY (0.92) to maxY (1) in 45 steps, adjusted by random number
+				y = yScale(maxY - ((maxY - minY) / breakpoint) * counter) - randomNumber;
+				counter++;
+			} else {
+				// from triangle tip to arbitrary end
+				y = yScale(minY) - randomNumber;
+			}
+			randomSet.push({ x, y });
+		}
+
+		// slow start to avoid the fuzzy line to start at the very left
+		const slowStart = 5;
+
+		// fuzzy line
+		const pa = path();
+		pa.moveTo(xBlackLeft1800, yScale(maxY));
+		for (let k = slowStart; k < randomSet.length; k++) {
+			pa.lineTo(randomSet[k].x, randomSet[k].y);
+		}
+		pa.lineTo(xScale(0), yScale(maxY + 0.05));
+
+		// fuzzy area
+		const area = path();
+		area.moveTo(xBlackLeft1800, yScale(maxY));
+		for (let j = slowStart; j < breakpoint; j++) {
+			area.lineTo(randomSet[j].x, randomSet[j].y);
+		}
+		area.lineTo(triangleTip.x, yScale(2));
+
+		return {
+			fuzzyLine: pa.toString(),
+			fuzzyArea: area.toString()
+		};
+	}
+
+	const { fuzzyLine, fuzzyArea } = drawFuzzyElements();
 </script>
 
 <h2 class="headline">
@@ -126,18 +185,14 @@
 <svg {width} {height}>
 	<g transform="translate({margin.left}, {margin.top})">
 		<g class="polygons">
-			<path d={drawPathBrown()} fill="#895c38" />
+			<path d={drawPathBlack()} fill="black" stroke="black" />
+			<path d={fuzzyLine} fill="none" stroke="black" stroke-width="0.5" />
+			<path d={fuzzyArea} fill="black" stroke="black" stroke-width="0.5" />
+			<path d={drawPathBrown()} fill="#895c38" stroke="#895c38" />
 			<path d={drawPathDarkYellow()} fill="#f4ad00" />
 			<path d={drawPathLightYellow()} fill="#e7ca87" />
-			<path d={drawPathBlack()} fill="black" />
 		</g>
-		<g class="yearLabels" dominant-baseline="middle">
-			<text x={xBlackLeft1890} y={yScale(4)} id="yearLabel1890" dy={8}>1890</text>
-			<text x={xBlackLeft1860} y={yScale(3)} dx={-8}>1860</text>
-			<text x={xBlackLeft1840} y={yScale(2)} dx={-8}>1840</text>
-			<text x={xBlackLeft1800} y={yScale(1)} dx={-8}>1800</text>
-		</g>
-
+		<!-- from triangle tip down 2x -->
 		<g class="polygonLines">
 			<line
 				x1={triangleTip.x}
@@ -158,12 +213,18 @@
 		</g>
 		<g class="yearLines">
 			<g y1={yScale(1)} y2={yScale(1)}>
-				<line x1={xScale(0)} x2={triangleTip.x} class="dark" />
+				<line x1={xScale(160000)} x2={triangleTip.x} class="dark" />
 				<line x1={triangleTip.x} x2={xBlackLeft1800} class="light" />
 			</g>
 			<line x1={xScale(0)} y1={yScale(2)} x2={xBlackLeft1840} y2={yScale(2)} class="light" />
 			<line x1={xScale(0)} y1={yScale(3)} x2={xBlackLeft1860} y2={yScale(3)} class="light" />
 			<line x1={xScale(0)} y1={yScale(4)} x2={xBlackLeft1890} y2={yScale(4)} class="dark" />
+		</g>
+		<g class="yearLabels" dominant-baseline="middle">
+			<text x={xBlackLeft1890} y={yScale(4)} id="yearLabel1890" dy={8}>1890</text>
+			<text x={xBlackLeft1860} y={yScale(3)} dx={-8}>1860</text>
+			<text x={xBlackLeft1840} y={yScale(2)} dx={-8}>1840</text>
+			<text x={xBlackLeft1800} y={yScale(1)} dx={-8}>1800</text>
 		</g>
 		<g class="otherLabels">
 			<text
