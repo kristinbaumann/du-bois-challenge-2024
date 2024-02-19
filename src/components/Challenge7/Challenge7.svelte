@@ -14,6 +14,7 @@ the illteracy points.
 <script>
 	import { scaleLinear } from 'd3-scale';
 	import data from '../../data/challenge07/data.js';
+	import Bar from './Bar.svelte';
 
 	const height = 520;
 	const width = 500;
@@ -41,16 +42,10 @@ the illteracy points.
 <svg {width} {height}>
 	<g transform="translate({margin.left}, {margin.top})">
 		{#each data as d, i}
-			<rect
-				x={xScale(0)}
-				y={yScale(i)}
-				width={xScale(d.value)}
-				height={barHeight}
-				class={d.country === 'Negroes, U.S.A.' ? 'highlight' : ''}
-			/>
 			<text x={-margin.left} y={yScale(i) + barHeight / 2} dominant-baseline="central"
 				>{d.country}</text
 			>
+			<Bar {xScale} {yScale} {barHeight} index={i} value={d.value} country={d.country} />
 		{/each}
 	</g>
 </svg>
@@ -72,14 +67,6 @@ the illteracy points.
 	svg {
 		display: block;
 		margin-top: 50px;
-	}
-	rect {
-		fill: #1e7c4d;
-		stroke: black;
-		stroke-width: 0.5px;
-	}
-	rect.highlight {
-		fill: #c31f3d;
 	}
 	text {
 		font-size: 0.6rem;
