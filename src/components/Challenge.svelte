@@ -71,4 +71,7 @@
 		position: relative;
 		aspect-ratio: 0.79;
 	}
+	#challenge6 .recreation-wrapper {
+		padding: 5px 0 0;
+	}
 </style>

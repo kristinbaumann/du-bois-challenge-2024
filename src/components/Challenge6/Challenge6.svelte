@@ -15,13 +15,13 @@
 		}
 	];
 
-	const width = 520;
-	const height = 590;
+	const width = 560;
+	const height = 620;
 	const margin = {
 		top: 40,
-		right: 20,
-		bottom: 20,
-		left: 20
+		right: 0,
+		bottom: 25,
+		left: 0
 	};
 	const innerHeight = height - margin.top - margin.bottom;
 	const innerWidth = width - margin.left - margin.right;
@@ -29,8 +29,8 @@
 	const wWhite = 24;
 	const wLightYellow = 8;
 	const wDarkYellow = 7.5;
-	const wBrown = 8.5;
-	const wBlack = 84;
+	const wBrown = 10;
+	const wBlack = 83;
 	const wSum = wWhite + wLightYellow + wDarkYellow + wBrown + wBlack;
 
 	const xPercFactor1890 = 6337980 / 84;
@@ -117,9 +117,11 @@
 </script>
 
 <h2 class="headline">
-	<span class="subtitle"
-		>The Amalgation of the White and Black elements in the population in the United States.</span
-	>
+	<p>
+		The Amalgation of the White and Black elements of the population <br />in the United States.
+	</p>
+	<p>Amalgamation des elements blancs et noirs parmi lar population Americaine.</p>
+	<p>Done by Atlanta University.</p>
 </h2>
 <svg {width} {height}>
 	<g transform="translate({margin.left}, {margin.top})">
@@ -135,11 +137,73 @@
 			<text x={xBlackLeft1840} y={yScale(2)} dx={-8}>1840</text>
 			<text x={xBlackLeft1800} y={yScale(1)} dx={-8}>1800</text>
 		</g>
+
+		<g class="polygonLines">
+			<line
+				x1={triangleTip.x}
+				y1={triangleTip.y}
+				x2={xLightYellowLeft1890}
+				y2={yScale(4)}
+				stroke="#333"
+				stroke-width="0.75px"
+			/>
+			<line
+				x1={triangleTip.x}
+				y1={triangleTip.y}
+				x2={xBrownLeft1890 + 15}
+				y2={yScale(4)}
+				stroke="#333"
+				stroke-width="0.75px"
+			/>
+		</g>
 		<g class="yearLines">
-			<line x1={xScale(0)} y1={yScale(1)} x2={xBlackLeft1800} y2={yScale(1)}></line>
-			<line x1={xScale(0)} y1={yScale(2)} x2={xBlackLeft1840} y2={yScale(2)}></line>
-			<line x1={xScale(0)} y1={yScale(3)} x2={xBlackLeft1860} y2={yScale(3)}></line>
-			<line x1={xScale(0)} y1={yScale(4)} x2={xBlackLeft1890} y2={yScale(4)}></line>
+			<g y1={yScale(1)} y2={yScale(1)}>
+				<line x1={xScale(0)} x2={triangleTip.x} class="dark" />
+				<line x1={triangleTip.x} x2={xBlackLeft1800} class="light" />
+			</g>
+			<line x1={xScale(0)} y1={yScale(2)} x2={xBlackLeft1840} y2={yScale(2)} class="light" />
+			<line x1={xScale(0)} y1={yScale(3)} x2={xBlackLeft1860} y2={yScale(3)} class="light" />
+			<line x1={xScale(0)} y1={yScale(4)} x2={xBlackLeft1890} y2={yScale(4)} class="dark" />
+		</g>
+		<g class="otherLabels">
+			<text
+				x={xBlackLeft1890 + (xBrownLeft1890 - xBlackLeft1890) / 2}
+				y={yScale(4)}
+				dy={-4}
+				class="size-l">6.337.980</text
+			>
+			<text
+				x={xBlackLeft1890 + (xBrownLeft1890 - xBlackLeft1890) / 2}
+				y={yScale(4)}
+				dy={12}
+				class="size-m black">85%</text
+			>
+			<text x={triangleTip.x} y={yScale(4)} dy={-4} class="size-m black">1.113.063</text>
+			<text x={triangleTip.x} y={yScale(4)} dy={12} class="size-m black">15%</text>
+			<text
+				x={xBlackLeft1860 + (xBrownLeft1890 - xBlackLeft1860) / 2}
+				y={yScale(3)}
+				dy={-4}
+				class="size-m">3.542.147</text
+			>
+			<text
+				x={xBlackLeft1860 + (xBrownLeft1890 - xBlackLeft1860) / 2}
+				y={yScale(3)}
+				dy={15}
+				class="size-m">90%</text
+			>
+			<text x={triangleTip.x} y={yScale(3)} dy={-4} class="size-s black">411.613</text>
+			<text x={triangleTip.x} y={yScale(3)} dy={10} class="size-s black">10%</text>
+			<text
+				x={xBlackLeft1860 + (xBrownLeft1890 - xBlackLeft1860) / 2}
+				y={yScale(3.5)}
+				class="size-m">Negroes</text
+			>
+			<text x={triangleTip.x} y={yScale(3.5)} class="size-s black">Mulattoes</text>
+			<text x={triangleTip.x} y={yScale(3.5)} dy={10} class="size-s black">Mulâtres</text>
+			<text x={triangleTip.x + (triangleTip.x - xScale(0) / 2)} y={yScale(3.5)} class="size-m black"
+				>Whites</text
+			>
 		</g>
 	</g>
 </svg>
@@ -147,8 +211,20 @@
 <style>
 	svg {
 		display: block;
-		margin: 70px 0 0 auto;
-		background-color: rgba(211, 211, 211, 0.5);
+		margin: 0px 0 0 auto;
+	}
+	.headline p {
+		font-weight: 400;
+		text-transform: none;
+		margin-top: 0;
+		font-family: 'Times New Roman', Times, serif;
+		color: #333;
+	}
+	.headline p:nth-of-type(2) {
+		font-size: 0.8rem;
+	}
+	.headline p:nth-of-type(3) {
+		font-size: 0.6rem;
 	}
 	.yearLabels text {
 		text-anchor: end;
@@ -158,7 +234,30 @@
 		text-anchor: start;
 	}
 	.yearLines line {
+		stroke-width: 0.5px;
+	}
+	.yearLines line.light {
 		stroke: white;
-		stroke-width: 1;
+	}
+	.yearLines line.dark {
+		stroke-width: 0.25px;
+		stroke: #000;
+	}
+	.otherLabels text {
+		text-anchor: middle;
+		fill: white;
+		text-transform: uppercase;
+	}
+	.otherLabels text.size-l {
+		font-size: 0.9rem;
+	}
+	.otherLabels text.size-m {
+		font-size: 0.7rem;
+	}
+	.otherLabels text.size-s {
+		font-size: 0.5rem;
+	}
+	.otherLabels text.black {
+		fill: black;
 	}
 </style>
