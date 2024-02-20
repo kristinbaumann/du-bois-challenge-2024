@@ -6,7 +6,7 @@
 	const width = 570;
 	const margin = {
 		top: 25,
-		right: 20,
+		right: 22,
 		bottom: 10,
 		left: 20
 	};
@@ -44,9 +44,29 @@
 	<g transform="translate({margin.left},{margin.top})">
 		<rect x={xScale(1790)} y={yScale(0)} width={xScale(1870)} height={yScale(100)} fill="black" />
 		<g class="polygons">
-			{#each freePaths as d}
-				<path {d} fill="#1e7c4d" />
+			{#each freePaths as p}
+				<path d={p} />
 			{/each}
+		</g>
+		<g class="xaxis" dominant-baseline="text-after-edge">
+			{#each data as d}
+				<text x={xScale(d.Year)} y={0}>{d.Year}</text>
+				{#if d.Year !== 1870}
+					<line x1={xScale(d.Year)} y1={0} x2={xScale(d.Year)} y2={yScale(d.Free)} />
+				{/if}
+			{/each}
+		</g>
+		<g class="valueLabels" dominant-baseline="text-after-edge">
+			{#each data as d}
+				<text x={xScale(d.Year)} y={d.Year !== 1870 ? yScale(d.Free) : yScale(12)} dy={-1}
+					>{d.Free}%</text
+				>
+			{/each}
+		</g>
+		<g class="typeLabels" dominant-baseline="middle">
+			<text x={xScale(1830)} y={yScale(4)}>Free - Libre</text>
+			<text x={xScale(1830)} y={yScale(43)} class="light">Slaves</text>
+			<text x={xScale(1830)} y={yScale(48)} class="light">Esclaves</text>
 		</g>
 	</g>
 </svg>
@@ -66,8 +86,39 @@
 		font-size: 0.7rem;
 	}
 	svg {
-		background-color: lightgray;
 		margin: 40px auto 0;
 		display: block;
+	}
+	.polygons path {
+		fill: #1e7c4d;
+		stroke: #1e7c4d;
+		stroke-width: 1;
+		transition: opacity 0.5s ease;
+	}
+	.polygons path:hover {
+		opacity: 0.6;
+	}
+	.xaxis text {
+		text-anchor: middle;
+		font-weight: bold;
+	}
+	.xaxis line {
+		stroke: #333;
+		stroke-width: 1;
+	}
+	.valueLabels text {
+		text-anchor: middle;
+		font-weight: bold;
+		font-size: 0.9rem;
+	}
+	.typeLabels text {
+		text-anchor: middle;
+		font-weight: bold;
+		font-size: 1.2rem;
+		text-transform: uppercase;
+	}
+	.typeLabels text.light {
+		fill: #e8d7c8;
+		font-size: 1.4rem;
 	}
 </style>
