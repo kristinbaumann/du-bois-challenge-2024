@@ -58,6 +58,22 @@
 	<p>Progrès Graduel des Nègres de l'escavage à la liberté en une Génération.</p>
 	<p>Done by Atlanta University.</p>
 </h2>
+<div class="explaner explaner-top">
+	<p>
+		In 1890 nearly one fifth of them owned their own homes and farms.<br />
+		This advance was accomplished entirely without state aid, and in the <br />
+		face of proscriptive laws.
+	</p>
+	<p>
+		En 1890 environ un cinquième étaient propriétaires de leurs hab-<br />
+		itations et de leurs fermes. Ce progrès s'été accompli sans <br />
+		secours aucun de l'etat et en présence de lois défavorables.
+	</p>
+</div>
+<div class="explaner explaner-bottom">
+	<p>In 1860 nearly 90% of the blacks were slaves.</p>
+	<p>En 1860 environ 90% des nègres étaient esclaves.</p>
+</div>
 <svg {width} {height}>
 	<g transform="translate({margin.left},{margin.top})">
 		<g class="bar1860" transform="translate(0,{margin.bar1860.top})">
@@ -210,5 +226,19 @@
 	.lines line {
 		stroke: #b5b5b5;
 		stroke-dasharray: 4;
+	}
+	.explaner {
+		position: absolute;
+		text-transform: uppercase;
+		font-size: 0.6rem;
+		line-height: 1.4;
+	}
+	.explaner-top {
+		top: 185px;
+		left: 10px;
+	}
+	.explaner-bottom {
+		top: 340px;
+		left: 40px;
 	}
 </style>
