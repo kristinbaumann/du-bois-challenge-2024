@@ -1,15 +1,3 @@
-<!-- 
-	In 1890 nearly one fifth of them owned their own homes and farms.
-	This advance was accomplished entirely without state aid, and in the 
-	face of proscriptive laws.
-
-	En 1890 environ un cinquième étaient propriétaires de leurs hab-
-	itations et de leurs fermes. Ce progrès s'été accompli sans 
-	secours aucun de l'etat et en présence de lois défavorables.
-
-	In 1860 nearly 90% of the blacks were slaves.
-	En 1860 environ 90% des nègres étaient esclaves.
- -->
 <script>
 	import { scaleLinear } from 'd3-scale';
 
