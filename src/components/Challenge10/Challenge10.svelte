@@ -65,9 +65,12 @@ SISTES DE L'EPOQUE.
 	const innerHeight = height - margin.top - margin.bottom;
 	const innerWidth = width - margin.left - margin.right;
 
+	const legendCircleRadius = 9;
+	const legendYDist = 22;
+	const legendXDistOuter = 10;
+
 	const fn = arc();
 	let total = data.reduce((total, s) => total + s.percentage, 0);
-
 	let acc = -Math.PI / 2;
 	const arcs = data.map((d) => {
 		const optionsDefault = {
@@ -87,7 +90,8 @@ SISTES DE L'EPOQUE.
 		};
 	});
 
-	console.log(arcs);
+	// sort data by orderLabels (as order in legends differs to order in pie)
+	const labelData = [...data].sort((a, b) => a.orderLabels - b.orderLabels);
 </script>
 
 <h2 class="headline">
@@ -110,7 +114,39 @@ SISTES DE L'EPOQUE.
 				{/if}
 			{/each}
 			<!-- border of whole pie -->
-			<circle cx={0} cy={0} r={100} fill="none" stroke="#b5b5b5" />
+			<circle cx={0} cy={0} r={100} fill="none" stroke="#6c6c6c" />
+		</g>
+		<!-- legend left -->
+		<g class="legend" transform="translate(0,{40})">
+			{#each labelData as d, i}
+				<circle cx={legendXDistOuter} cy={legendYDist * i} r={legendCircleRadius} fill={d.color} />
+				<text
+					x={legendXDistOuter + legendCircleRadius}
+					y={legendYDist * i + legendCircleRadius / 2}
+					dx={6}
+					dy={-3}
+					dominant-baseline="middle"
+					text-anchor="start">{d.occupation}</text
+				>
+			{/each}
+		</g>
+		<!-- legend right -->
+		<g class="legend french" transform="translate(0,{40})">
+			{#each labelData as d, i}
+				<circle
+					cx={innerWidth - legendXDistOuter}
+					cy={legendYDist * i}
+					r={legendCircleRadius}
+					fill={d.color}
+				/>
+				<text
+					x={innerWidth - legendXDistOuter - legendCircleRadius}
+					y={legendYDist * i + legendCircleRadius / 2}
+					dx={-6}
+					dy={-3}
+					text-anchor="end">{d.occupationFrench}</text
+				>
+			{/each}
 		</g>
 	</g>
 </svg>
@@ -119,7 +155,6 @@ SISTES DE L'EPOQUE.
 	svg {
 		display: inline-block;
 		margin: 250px auto;
-		background-color: lightgray;
 	}
 	.pie text {
 		text-anchor: middle;
@@ -127,5 +162,16 @@ SISTES DE L'EPOQUE.
 	}
 	.pie text.tiny {
 		font-size: 0.5rem;
+	}
+	.legend circle {
+		stroke: #6c6c6c;
+	}
+	.legend text {
+		font-size: 0.6rem;
+		font-weight: 200;
+		text-transform: uppercase;
+	}
+	.legend.french text {
+		fill: #d22a49;
 	}
 </style>
