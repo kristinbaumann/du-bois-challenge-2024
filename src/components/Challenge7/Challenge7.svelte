@@ -20,7 +20,7 @@ the illteracy points.
 	import markerRed from '$lib/assets/images/marker_red.png';
 
 	const height = 520;
-	const width = 500;
+	let width = 300;
 	const margin = {
 		top: 50,
 		right: 20,
@@ -29,12 +29,14 @@ the illteracy points.
 	};
 	const barHeight = 20;
 	const innerHeight = height - margin.top - margin.bottom;
-	const innerWidth = width - margin.left - margin.right;
+	$: innerWidth = width - margin.left - margin.right;
 
-	const xScale = scaleLinear().domain([0, 73]).range([0, innerWidth]);
+	$: xScale = scaleLinear().domain([0, 73]).range([0, innerWidth]);
 	const yScale = scaleLinear()
 		.domain([0, data.length - 1])
 		.range([0, innerHeight]);
+
+	$: console.log('width', width, innerWidth);
 </script>
 
 <h2 class="headline">
@@ -42,35 +44,37 @@ the illteracy points.
 	<p>Proportion d'illettrés parmi les Nègres Americains comparée à celle des autres nations.</p>
 	<p>Done by Atlanta University.</p>
 </h2>
-<svg {width} {height}>
-	<defs>
-		<!-- multiple green marker pattern -->
-		{#each data as d, i}
-			<pattern
-				id="pattern-green-{i}"
-				patternUnits="userSpaceOnUse"
-				width={yScale(73)}
-				height={barHeight}
-				patternTransform="translate(-{20 * randomInt(10)()},0)"
-				preserveAspectRatio="xMinYMid"
-			>
-				<image href={markerGreen} x="0" y="0" width="589" height="155" />
+<div class="chart-container" bind:clientWidth={width}>
+	<svg {width} {height}>
+		<defs>
+			<!-- multiple green marker pattern -->
+			{#each data as d, i}
+				<pattern
+					id="pattern-green-{i}"
+					patternUnits="userSpaceOnUse"
+					width={yScale(73)}
+					height={barHeight}
+					patternTransform="translate(-{20 * randomInt(10)()},0)"
+					preserveAspectRatio="xMinYMid"
+				>
+					<image href={markerGreen} x="0" y="0" width="589" height="155" />
+				</pattern>
+			{/each}
+			<!-- red marker pattern -->
+			<pattern id="pattern-red" patternUnits="userSpaceOnUse" width={yScale(56)} height={barHeight}>
+				<image href={markerRed} x="0" y="0" width="1274" height="259" />
 			</pattern>
-		{/each}
-		<!-- red marker pattern -->
-		<pattern id="pattern-red" patternUnits="userSpaceOnUse" width={yScale(56)} height={barHeight}>
-			<image href={markerRed} x="0" y="0" width="1274" height="259" />
-		</pattern>
-	</defs>
-	<g transform="translate({margin.left}, {margin.top})">
-		{#each data as d, i}
-			<text x={-margin.left} y={yScale(i) + barHeight / 2} dominant-baseline="central"
-				>{d.country}</text
-			>
-			<Bar {xScale} {yScale} {barHeight} index={i} value={d.value} country={d.country} />
-		{/each}
-	</g>
-</svg>
+		</defs>
+		<g transform="translate({margin.left}, {margin.top})">
+			{#each data as d, i}
+				<text x={-margin.left} y={yScale(i) + barHeight / 2} dominant-baseline="central"
+					>{d.country}</text
+				>
+				<Bar bind:xScale {yScale} {barHeight} index={i} value={d.value} country={d.country} />
+			{/each}
+		</g>
+	</svg>
+</div>
 
 <style>
 	.headline p {

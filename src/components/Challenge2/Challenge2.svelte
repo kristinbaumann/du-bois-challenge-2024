@@ -6,19 +6,19 @@
 	import YAxis from './YAxis.svelte';
 	import XAxis from './XAxis.svelte';
 
-	const width = 370;
+	let width = 100;
 	const height = 600;
 
 	const margin = { top: 40, right: 80, bottom: 10, left: 80 };
-	const innerWidth = width - margin.left - margin.right;
+	$: innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 
-	const xScale = scaleLinear().domain([0, 3]).range([innerWidth, 0]);
+	$: xScale = scaleLinear().domain([0, 3]).range([innerWidth, 0]);
 	const yScale = scaleLinear().domain([1790, 1870]).range([0, innerHeight]);
 
-	const freeAreaPoints = getPointsData('free', xScale, yScale);
-	const slaveAreaPoints = getPointsData('slaves', xScale, yScale);
-	const wobblyData = drawWobblyLineArea(xScale, yScale);
+	$: freeAreaPoints = getPointsData('free', xScale, yScale);
+	$: slaveAreaPoints = getPointsData('slaves', xScale, yScale);
+	$: wobblyData = drawWobblyLineArea(xScale, yScale);
 
 	function drawPath(set) {
 		const p = path();
@@ -32,31 +32,38 @@
 </script>
 
 <h2 class="headline">Slaves and free negroes.</h2>
-<svg {width} {height}>
-	<g transform="translate({margin.left}, {margin.top})">
-		<g class="freeAreas">
-			{#each freeAreaPoints as area}
-				<path d={drawPath(area)} class="free" />
-			{/each}
+<div class="chart-container" bind:clientWidth={width}>
+	<svg {height}>
+		<g transform="translate({margin.left}, {margin.top})">
+			<g class="freeAreas">
+				{#each freeAreaPoints as area}
+					<path d={drawPath(area)} class="free" />
+				{/each}
+			</g>
+			<g class="slaveAreas">
+				{#each slaveAreaPoints as area}
+					<path d={drawPath(area)} class="slave" />
+				{/each}
+			</g>
+			<path d={wobblyData.area} class="wobblyArea" />
+			<path d={wobblyData.line} class="wobblyLine" />
+			<YAxis {xScale} {yScale} />
+			<XAxis {xScale} />
 		</g>
-		<g class="slaveAreas">
-			{#each slaveAreaPoints as area}
-				<path d={drawPath(area)} class="slave" />
-			{/each}
-		</g>
-		<path d={wobblyData.area} class="wobblyArea" />
-		<path d={wobblyData.line} class="wobblyLine" />
-		<YAxis {xScale} {yScale} />
-		<XAxis {xScale} />
-	</g>
-</svg>
+	</svg>
+</div>
 
 <style>
+	.chart-container {
+		margin: 0 auto;
+		max-width: 380px;
+	}
 	svg {
 		display: block;
 		margin: auto;
 		font-weight: 200;
 		font-size: 0.9rem;
+		width: 100%;
 	}
 	path {
 		stroke: #e4cfbed9;

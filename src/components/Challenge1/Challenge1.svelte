@@ -12,9 +12,9 @@
 	let mapWidth = 450;
 	let mapHeight = 500;
 
-	const projection = geoAlbers();
-	projection.fitSize([mapWidth, mapHeight], dataCounties);
-	const drawCountyPath = geoPath(projection);
+	let projection = geoAlbers();
+	$: projection.fitSize([mapWidth, mapWidth + 50], dataCounties);
+	$: drawCountyPath = geoPath(projection);
 
 	const filterOptions = [
 		{
@@ -57,9 +57,11 @@
 			}
 		};
 	};
+	$: console.log(mapWidth, drawCountyPath);
 </script>
 
 <h2 class="headline">Negro Population of Georgia By Counties.</h2>
+
 <div class="filter">
 	<p>Color map by:</p>
 	{#each filterOptions as option}
@@ -68,23 +70,27 @@
 		</button>
 	{/each}
 </div>
+
 <div class="map-plus-legend">
-	<svg width={mapWidth} height={mapHeight}>
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<g transform="translate(25,0) rotate(6)" on:mouseleave={() => (hoveredCountyIndex = null)}>
-			{#each dataCounties.features as c, i}
-				<path
-					d={drawCountyPath(c)}
-					id={c.properties.county}
-					class="county"
-					fill={getCountyColor(c)}
-					fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
-					on:mouseover={() => (hoveredCountyIndex = i)}
-					on:focus={() => (hoveredCountyIndex = i)}
-				/>
-			{/each}
-		</g>
-	</svg>
+	<div class="chart-container" bind:clientWidth={mapWidth}>
+		<svg height={mapHeight}>
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<g transform="translate(25,0) rotate(6)" on:mouseleave={() => (hoveredCountyIndex = null)}>
+				{#each dataCounties.features as c, i}
+					<path
+						d={drawCountyPath(c)}
+						id={c.properties.county}
+						class="county"
+						fill={getCountyColor(c)}
+						fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
+						on:mouseover={() => (hoveredCountyIndex = i)}
+						on:focus={() => (hoveredCountyIndex = i)}
+					/>
+				{/each}
+			</g>
+		</svg>
+	</div>
+
 	<div class="legend">
 		{#each Object.values(colors) as color}
 			<p>
@@ -97,6 +103,9 @@
 <Tooltip data={getTooltipData()} />
 
 <style>
+	svg {
+		width: 100%;
+	}
 	path {
 		cursor: pointer;
 		stroke: #333333;

@@ -7,7 +7,7 @@
 	import Bar from './Bar.svelte';
 
 	const height = 645;
-	const width = 450;
+	let width = 450;
 	const margin = {
 		top: 0,
 		right: 10,
@@ -16,10 +16,10 @@
 	};
 	const barHeight = 14;
 
-	const innerWidth = width - margin.left - margin.right;
+	$: innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 
-	const xScale = scaleLinear()
+	$: xScale = scaleLinear()
 		.domain([0, max(data, (d) => d.value)])
 		.range([0, innerWidth]);
 	const yScale = scaleLinear().domain([0, data.length]).range([0, innerHeight]);
@@ -28,45 +28,48 @@
 </script>
 
 <h2 class="headline">Acres of Land owned by Negroes <br />in Georgia.</h2>
-<svg {width} {height}>
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<g
-		transform="translate({margin.left}, {margin.top})"
-		on:mouseout={() => (hoveredIndex = null)}
-		on:blur={() => (hoveredIndex = null)}
-	>
-		{#each data as d, i}
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<g class="row" on:mouseover={() => (hoveredIndex = i)} on:focus={() => (hoveredIndex = i)}>
-				<Bar {xScale} {yScale} {barHeight} index={i} value={d.value} />
-				<text
-					x={xScale(0)}
-					y={yScale(i) + barHeight / 2}
-					dx={-3}
-					dy={1}
-					text-anchor="end"
-					dominant-baseline="middle"
-					class="yearLabel {hoveredIndex === i ? 'active' : ''}">{d.year}</text
-				>
-				<text
-					x={xScale(d.value) / 2}
-					y={yScale(i) + barHeight / 2}
-					text-anchor="middle"
-					dominant-baseline="middle"
-					dy={1}
-					class="valueLabel {d.year === 1874 || d.year === 1899 || hoveredIndex === i
-						? 'active'
-						: ''}">{format(',d')(d.value)}</text
-				>
-			</g>
-		{/each}
-	</g>
-</svg>
+<div class="chart-container" bind:clientWidth={width}>
+	<svg {height}>
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<g
+			transform="translate({margin.left}, {margin.top})"
+			on:mouseout={() => (hoveredIndex = null)}
+			on:blur={() => (hoveredIndex = null)}
+		>
+			{#each data as d, i}
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<g class="row" on:mouseover={() => (hoveredIndex = i)} on:focus={() => (hoveredIndex = i)}>
+					<Bar {xScale} {yScale} {barHeight} index={i} value={d.value} />
+					<text
+						x={xScale(0)}
+						y={yScale(i) + barHeight / 2}
+						dx={-3}
+						dy={1}
+						text-anchor="end"
+						dominant-baseline="middle"
+						class="yearLabel {hoveredIndex === i ? 'active' : ''}">{d.year}</text
+					>
+					<text
+						x={xScale(d.value) / 2}
+						y={yScale(i) + barHeight / 2}
+						text-anchor="middle"
+						dominant-baseline="middle"
+						dy={1}
+						class="valueLabel {d.year === 1874 || d.year === 1899 || hoveredIndex === i
+							? 'active'
+							: ''}">{format(',d')(d.value)}</text
+					>
+				</g>
+			{/each}
+		</g>
+	</svg>
+</div>
 
 <style>
 	svg {
 		display: block;
 		margin: auto;
+		width: 100%;
 	}
 	.headline {
 		margin-bottom: 3px;

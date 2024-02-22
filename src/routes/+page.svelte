@@ -68,12 +68,11 @@
 	:global(section.inner) {
 		max-width: 600px;
 		margin: auto;
-		padding: 20px 0;
+		padding: 20px 20px;
 	}
 	:global(section.outer) {
-		/* margin: 0 50px; */
 		margin: auto;
-		padding: 20px;
+		padding: 20px 10px;
 		max-width: 1200px;
 	}
 	:global(.recreation .headline) {

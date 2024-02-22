@@ -25,7 +25,7 @@
 
 <style>
 	.challenge {
-		padding: 20px;
+		padding: 10px;
 		border-radius: 10px;
 		box-shadow: 0 0px 15px 0px rgba(0, 0, 0, 0.1);
 		margin: 0 0 30px;
@@ -36,7 +36,7 @@
 		align-items: flex-start;
 		justify-content: space-around;
 		column-gap: 5px;
-		flex-wrap: nowrap;
+		flex-wrap: wrap;
 	}
 	.original {
 		flex-shrink: 0;
@@ -48,7 +48,7 @@
 		flex-grow: 1;
 		flex-basis: 49%;
 	}
-	@media (max-width: 1160px) {
+	@media (max-width: 768px) {
 		.original {
 			flex-basis: 100%;
 		}
@@ -59,6 +59,7 @@
 
 	.original img {
 		width: 100%;
+		max-width: fit-content;
 	}
 
 	h2 {
@@ -69,7 +70,7 @@
 		border-radius: 10px;
 		padding: 20px;
 		position: relative;
-		aspect-ratio: 0.79;
+		/* aspect-ratio: 0.79; */
 	}
 	#challenge6 .recreation-wrapper {
 		padding: 5px 0 0;
