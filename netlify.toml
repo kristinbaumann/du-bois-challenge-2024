@@ -4,8 +4,8 @@
 
 
 [[redirects]]
-	from = "/*"
-	to = "https://du-bois-challenge-2024-2.netlify.app/du-bois-challenge-2024/:splat"
+	from = "/"
+	to = "https://du-bois-challenge-2024-2.netlify.app/du-bois-challenge-2024/"
 	status = 200
 	force = true
 	
