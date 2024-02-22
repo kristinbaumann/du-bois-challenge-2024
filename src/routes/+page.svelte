@@ -4,10 +4,13 @@
 	import Intro from '../components/Intro.svelte';
 	import {
 		PUBLIC_MAX_SHOWN_CHALLENGE_DEV,
-		PUBLIC_MAX_SHOWN_CHALLENGE_PROD
+		PUBLIC_MAX_SHOWN_CHALLENGE_PROD,
+		PUBLIC_FATHOM_SITE_ID,
+		PUBLIC_FATHOM_URL
 	} from '$env/static/public';
 	import { dev } from '$app/environment';
 	import { onMount } from 'svelte';
+	import * as Fathom from 'fathom-client';
 
 	const maxShownChallenge = Number(
 		dev ? PUBLIC_MAX_SHOWN_CHALLENGE_DEV : PUBLIC_MAX_SHOWN_CHALLENGE_PROD
@@ -20,6 +23,9 @@
 				await import(`../components/Challenge${i}/Challenge${i}.svelte`)
 			).default;
 		}
+		Fathom.load(PUBLIC_FATHOM_SITE_ID, {
+			url: PUBLIC_FATHOM_URL
+		});
 	});
 </script>
 

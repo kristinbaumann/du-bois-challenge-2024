@@ -1,6 +1,17 @@
+<script>
+	import * as Fathom from 'fathom-client';
+</script>
+
 <header>
 	<h1>Du Bois Challenge 2024</h1>
-	<p>By <a href="https://www.kristin-baumann.com">Kristin Baumann</a></p>
+	<p>
+		By <a
+			href="https://www.kristin-baumann.com"
+			target="_blank"
+			on:click={() => Fathom.trackEvent('click link to kristin-baumann.com in header')}
+			>Kristin Baumann</a
+		>
+	</p>
 </header>
 
 <style>
