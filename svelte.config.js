@@ -3,8 +3,6 @@ import adapter from '@sveltejs/adapter-netlify';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		// where the app is served from
-		paths: { base: '/du-bois-challenge-2024' },
 		// default options are shown
 		adapter: adapter({
 			// if true, will create a Netlify Edge Function rather
