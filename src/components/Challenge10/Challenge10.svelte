@@ -110,7 +110,7 @@ SISTES DE L'EPOQUE.
 				{#if arc.value > 10}
 					<text x={arc.centroidDefault[0]} y={arc.centroidDefault[1]}>{arc.value}%</text>
 				{:else}
-					<text x={arc.centroidOuter[0]} y={arc.centroidOuter[1]} class={'tiny'}>{arc.value}%</text>
+					<text x={arc.centroidOuter[0]} y={arc.centroidOuter[1]} class="tiny">{arc.value}%</text>
 				{/if}
 			{/each}
 			<!-- border of whole pie -->

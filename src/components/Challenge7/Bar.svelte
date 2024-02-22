@@ -28,7 +28,7 @@
 	on:inview_enter={() => {
 		$currentValue = value;
 	}}
-	class={country === 'Negroes, U.S.A.' ? 'highlight' : ''}
+	class:highlight={country === 'Negroes, U.S.A.'}
 />
 
 <style>

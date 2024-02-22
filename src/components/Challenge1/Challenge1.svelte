@@ -63,10 +63,7 @@
 <div class="filter">
 	<p>Color map by:</p>
 	{#each filterOptions as option}
-		<button
-			class={selectedFilter === option ? 'active' : ''}
-			on:click={() => (selectedFilter = option)}
-		>
+		<button class:active={selectedFilter === option} on:click={() => (selectedFilter = option)}>
 			{option.label}
 		</button>
 	{/each}
