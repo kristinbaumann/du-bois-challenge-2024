@@ -79,7 +79,7 @@
 		}
 	}
 	#challenge6 .recreation-wrapper {
-		padding: 5px 0 0;
+		padding: 5px 0 0 5px;
 	}
 	#challenge8 .recreation-wrapper {
 		padding: 5px 0 0;
