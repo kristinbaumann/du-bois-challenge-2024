@@ -9,8 +9,6 @@
 	import Tooltip from './Tooltip.svelte';
 	import { extractCountyName, getCountyNameFromIndex, getPopulationSizeFromIndex } from './helpers';
 
-	$: console.log(window.innerWidth);
-
 	let mapWidth;
 	if (window.innerWidth < 400) {
 		mapWidth = 220;
