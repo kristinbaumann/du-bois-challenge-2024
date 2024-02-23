@@ -65,19 +65,21 @@
 	/* light font for labels in charts */
 	@font-face {
 		font-family: 'ErieLight';
-		src: url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.eot');
+		src: url('https://db.onlinewebfonts.com/t/30c6f356622bd29b5ba4fb9ad5a15f3b.eot');
 		src:
-			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.eot?#iefix') format('embedded-opentype'),
-			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.woff2') format('woff2'),
-			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.woff') format('woff'),
-			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.ttf') format('truetype'),
-			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.svg#ErieLight') format('svg');
+			url('https://db.onlinewebfonts.com/t/30c6f356622bd29b5ba4fb9ad5a15f3b.eot?#iefix')
+				format('embedded-opentype'),
+			url('https://db.onlinewebfonts.com/t/30c6f356622bd29b5ba4fb9ad5a15f3b.woff2') format('woff2'),
+			url('https://db.onlinewebfonts.com/t/30c6f356622bd29b5ba4fb9ad5a15f3b.woff') format('woff'),
+			url('https://db.onlinewebfonts.com/t/30c6f356622bd29b5ba4fb9ad5a15f3b.ttf') format('truetype'),
+			url('https://db.onlinewebfonts.com/t/30c6f356622bd29b5ba4fb9ad5a15f3b.svg#ErieLight')
+				format('svg');
 	}
 
 	/* bold font for headlines in adaptions  */
 	@font-face {
 		font-family: 'Milestone One';
-		src: url('fonts/Milestone-One/Milestone One.otf');
+		src: url('/fonts/Milestone-One/Milestone One.otf');
 	}
 
 	:global(body) {
