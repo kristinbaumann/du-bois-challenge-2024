@@ -72,6 +72,11 @@
 		position: relative;
 		/* aspect-ratio: 0.79; */
 	}
+	@media (max-width: 767px) {
+		.recreation-wrapper {
+			padding: 10px 5px;
+		}
+	}
 	#challenge6 .recreation-wrapper {
 		padding: 5px 0 0;
 	}

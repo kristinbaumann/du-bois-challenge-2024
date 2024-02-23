@@ -6,10 +6,10 @@
 	import YAxis from './YAxis.svelte';
 	import XAxis from './XAxis.svelte';
 
-	let width = 100;
+	let width = 300;
 	const height = 600;
 
-	const margin = { top: 40, right: 80, bottom: 10, left: 80 };
+	const margin = { top: 40, right: 70, bottom: 10, left: 70 };
 	$: innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 

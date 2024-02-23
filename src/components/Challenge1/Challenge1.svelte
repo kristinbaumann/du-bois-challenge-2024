@@ -9,11 +9,18 @@
 	import Tooltip from './Tooltip.svelte';
 	import { extractCountyName, getCountyNameFromIndex, getPopulationSizeFromIndex } from './helpers';
 
-	let mapWidth = 300;
+	$: console.log(window.innerWidth);
+
+	let mapWidth;
+	if (window.innerWidth < 400) {
+		mapWidth = 220;
+	} else {
+		mapWidth = 300;
+	}
 	let mapHeight = mapWidth * 1.2;
 
 	let projection = geoAlbers();
-	$: projection.fitSize([mapWidth, mapWidth + 50], dataCounties);
+	$: projection.fitSize([mapWidth, mapHeight], dataCounties);
 	$: drawCountyPath = geoPath(projection);
 
 	const filterOptions = [
@@ -57,7 +64,6 @@
 			}
 		};
 	};
-	$: console.log(mapWidth, drawCountyPath);
 </script>
 
 <h2 class="headline">Negro Population of Georgia By Counties.</h2>

@@ -72,7 +72,7 @@
 		width: 100%;
 	}
 	.headline {
-		margin-bottom: 3px;
+		margin-bottom: 10px;
 	}
 	g.row {
 		cursor: pointer;
