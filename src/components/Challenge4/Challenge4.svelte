@@ -14,9 +14,49 @@
 	import starCircle from '$lib/assets/images/star-circle.svg';
 	import lines from '$lib/assets/images/lines.svg';
 
-	const width = 500;
+	// *** change width based on window size
+	// greater than 1200px -> 500px
+	// between 1024 and 1200px -> 400px
+	// between 768 and 1024px (not wrapped) -> 320px
+	// between 700 and 768px (wrapped) --> 650px
+	// between 425px and 700px (wrapped) --> 380px
+	// 375px to 425px (wrapped) --> 310px
+	// 320 to 375px (wrapped) --> 260px
+	const windowWidth = window.innerWidth;
+	let width;
+	let startOffsetRadialTextLeft = '45%';
+	let startOffsetRadialTextRight = '55%';
+	switch (true) {
+		case windowWidth >= 1200:
+			width = 500;
+			break;
+		case windowWidth >= 1024:
+			width = 400;
+			break;
+		case windowWidth > 768:
+			startOffsetRadialTextLeft = '35%';
+			startOffsetRadialTextRight = '65%';
+			width = 320;
+			break;
+		case windowWidth >= 700:
+			width = 650;
+			break;
+		case windowWidth >= 425:
+			width = 380;
+			break;
+		case windowWidth >= 375:
+			startOffsetRadialTextLeft = '35%';
+			startOffsetRadialTextRight = '65%';
+			width = 310;
+			break;
+		default:
+			startOffsetRadialTextLeft = '30%';
+			startOffsetRadialTextRight = '70%';
+			width = 260;
+	}
+
 	const margin = {
-		top: 10,
+		top: 15,
 		right: 0,
 		bottom: 10,
 		left: 0
@@ -63,8 +103,8 @@
 		<span>The Georgio Negro.</span><br />
 		<span class="subtitle">A social study<br />By<br />W. E. Burghardt Du Bois.</span>
 	</h2>
-	<div>
-		<svg {height} {width} style="display: block;">
+	<div class="chart-container">
+		<svg {width} {height} style="display: block;">
 			<g transform="translate({margin.left},{margin.top})">
 				<defs>
 					<path id="outline" d={getPath(outline)} class="outline" />
@@ -106,7 +146,7 @@
 						><textPath
 							href="#text-path-left-circle"
 							class="circle-text"
-							startOffset="45%"
+							startOffset={startOffsetRadialTextLeft}
 							text-anchor="middle">Distribution of</textPath
 						></text
 					>
@@ -124,7 +164,7 @@
 						><textPath
 							href="#text-path-right-circle"
 							class="circle-text"
-							startOffset="55%"
+							startOffset={startOffsetRadialTextRight}
 							text-anchor="middle">the negro race</textPath
 						></text
 					>
@@ -144,10 +184,12 @@
 	</div>
 
 	<p class="fine-print">
-		THIS CASE IS DEVOTED TO A SERIES OF CHARTS,MAPS, AND OTHER DEVI-<br /> CES DESIGNED TO
-		ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A <br />SINGLE TYPICAL STATE OF THE UNITED
-		STATES.<br /><br />
-		"The problem of the 20th Century is the the problem of the<br /> color-line."
+		<span>THIS CASE IS DEVOTED TO A SERIES OF CHARTS, MAPS, AND OTHER DEVI</span>
+		<span>CES DESIGNED TO ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A</span>
+		<span>SINGLE TYPICAL STATE OF THE UNITED STATES.</span>
+		<span class="break"></span>
+		<span>"The problem of the 20th Century is the the problem of the </span><span>color-line."</span
+		>
 	</p>
 </div>
 
@@ -161,6 +203,7 @@
 	svg {
 		display: block;
 		margin: auto;
+		/* width: 100%; */
 	}
 	p {
 		text-align: center;
@@ -192,7 +235,7 @@
 		text-transform: uppercase;
 	}
 	.headline {
-		margin-bottom: 75px;
+		margin-bottom: 90px;
 	}
 	p,
 	.legend span {
@@ -201,12 +244,15 @@
 		font-weight: 200;
 	}
 	.legend {
+		display: flex;
+		flex-direction: column;
 		margin: 15px auto 0;
-		width: 270px;
+		max-width: 252px;
 	}
 	.legend div {
 		display: flex;
 		margin-bottom: 10px;
+		flex-grow: 0;
 	}
 	.legend div span {
 		display: block;
@@ -217,6 +263,19 @@
 		margin-top: 2px;
 	}
 	.fine-print {
-		margin-bottom: 60px;
+		margin: 35px 0 50px;
+		padding: 0 3px;
+	}
+	.fine-print span {
+		display: block;
+	}
+	.fine-print span.break {
+		display: block;
+		margin: 10px 0;
+	}
+	@media (max-width: 768px) {
+		.fine-print span {
+			display: inline;
+		}
 	}
 </style>
