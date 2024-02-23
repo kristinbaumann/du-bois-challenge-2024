@@ -100,7 +100,7 @@
 
 <div class="wrapper">
 	<h2 class="headline">
-		<span>The Georgio Negro.</span>
+		<span>The Georgia Negro.</span>
 		<span class="subtitle">
 			<span>A social study</span>
 			<span>By</span>
