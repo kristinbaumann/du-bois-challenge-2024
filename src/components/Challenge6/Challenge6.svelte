@@ -182,7 +182,8 @@
 	<p>Amalgamation des elements blancs et noirs parmi lar population Americaine.</p>
 	<p>Done by Atlanta University.</p>
 </h2>
-<svg {width} {height}>
+
+<!-- <svg {width} {height}>
 	<g transform="translate({margin.left}, {margin.top})">
 		<g class="polygons">
 			<path d={drawPathBlack()} fill="black" stroke="black" />
@@ -192,7 +193,7 @@
 			<path d={drawPathDarkYellow()} fill="#f4ad00" />
 			<path d={drawPathLightYellow()} fill="#e7ca87" />
 		</g>
-		<!-- from triangle tip down 2x -->
+		from triangle tip down 2x
 		<g class="polygonLines">
 			<line
 				x1={triangleTip.x}
@@ -267,7 +268,7 @@
 			>
 		</g>
 	</g>
-</svg>
+</svg> -->
 
 <style>
 	svg {

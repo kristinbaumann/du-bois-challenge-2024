@@ -19,15 +19,15 @@ the illteracy points.
 	import markerGreen from '$lib/assets/images/marker_green.png';
 	import markerRed from '$lib/assets/images/marker_red.png';
 
-	const height = 520;
+	const height = 450;
 	let width = 300;
 	const margin = {
-		top: 50,
+		top: 40,
 		right: 20,
 		bottom: 45,
-		left: 80
+		left: 70
 	};
-	const barHeight = 20;
+	const barHeight = 22;
 	const innerHeight = height - margin.top - margin.bottom;
 	$: innerWidth = width - margin.left - margin.right;
 
@@ -35,8 +35,6 @@ the illteracy points.
 	const yScale = scaleLinear()
 		.domain([0, data.length - 1])
 		.range([0, innerHeight]);
-
-	$: console.log('width', width, innerWidth);
 </script>
 
 <h2 class="headline">
@@ -45,7 +43,7 @@ the illteracy points.
 	<p>Done by Atlanta University.</p>
 </h2>
 <div class="chart-container" bind:clientWidth={width}>
-	<svg {width} {height}>
+	<svg {height}>
 		<defs>
 			<!-- multiple green marker pattern -->
 			{#each data as d, i}
@@ -57,7 +55,7 @@ the illteracy points.
 					patternTransform="translate(-{20 * randomInt(10)()},0)"
 					preserveAspectRatio="xMinYMid"
 				>
-					<image href={markerGreen} x="0" y="0" width="589" height="155" />
+					<image href={markerGreen} x="0" y="0" width="1000" height="160" />
 				</pattern>
 			{/each}
 			<!-- red marker pattern -->
@@ -78,21 +76,24 @@ the illteracy points.
 
 <style>
 	.headline p {
+		font-family: 'Times New Roman', Times, serif;
+		font-size: 1rem;
 		font-weight: 400;
+		color: #333;
 		text-transform: none;
 		margin-top: 0;
-		font-family: 'Times New Roman', Times, serif;
-		color: #333;
 	}
 	.headline p:nth-of-type(2) {
-		font-size: 0.8rem;
+		font-size: 0.7rem;
 	}
 	.headline p:nth-of-type(3) {
 		font-size: 0.6rem;
 	}
 	svg {
 		display: block;
-		margin-top: 50px;
+		/* margin-top: 50px; */
+		width: 100%;
+		padding: 0 10px;
 	}
 	text {
 		font-size: 0.6rem;

@@ -24,13 +24,14 @@
 	<span class="subtitle">Based on a study of 40.000 individuals of negro descent.</span>
 </h2>
 
+<!-- 
 <svg {height} {width}>
 	<g transform="translate({margin.left},{margin.top})">
 		{#each data as d, i}
 			<Row {data} {d} {i} {margin} {yScale} {barWidth} />
 		{/each}
 	</g>
-</svg>
+</svg> -->
 
 <style>
 	svg {
