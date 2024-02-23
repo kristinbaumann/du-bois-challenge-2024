@@ -5,17 +5,26 @@
 
 	import Row from './Row.svelte';
 
+	$: width = 355;
 	const height = 620;
-	const width = 355;
-	const margin = {
+	let margin = {
 		top: 30,
-		right: 0,
+		right: 50,
 		bottom: 10,
-		left: 150
+		left: 50
 	};
+	if (window.innerWidth < 425) {
+		margin = {
+			...margin,
+			right: 10,
+			left: 10
+		};
+	}
+	$: innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
-	const barWidth = 200;
 
+	// xScale arbitrary from 0 to 100, horizontal axis divided in 2 parts (left half text, right half bars)
+	$: xScale = scaleLinear().domain([0, 100]).range([0, innerWidth]);
 	const yScale = scaleLinear().domain([0, 100]).range([0, innerHeight]);
 </script>
 
@@ -24,21 +33,26 @@
 	<span class="subtitle">Based on a study of 40.000 individuals of negro descent.</span>
 </h2>
 
-<!-- 
-<svg {height} {width}>
-	<g transform="translate({margin.left},{margin.top})">
-		{#each data as d, i}
-			<Row {data} {d} {i} {margin} {yScale} {barWidth} />
-		{/each}
-	</g>
-</svg> -->
+<div class="chart-container" bind:clientWidth={width}>
+	<svg {height}>
+		<g transform="translate({margin.left},{margin.top})" class="test">
+			{#each data as d, i}
+				<Row {data} {d} {i} {yScale} bind:xScale />
+			{/each}
+		</g>
+	</svg>
+</div>
 
 <style>
 	svg {
 		display: block;
 		margin: auto;
+		width: 100%;
 	}
 	.headline span.subtitle {
 		font-family: 'ErieLight';
+	}
+	.test {
+		background-color: pink;
 	}
 </style>

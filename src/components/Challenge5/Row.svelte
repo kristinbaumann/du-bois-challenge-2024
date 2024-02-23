@@ -6,11 +6,10 @@
 	import { patterns } from '$lib/assets/images/patterns.js';
 
 	export let yScale;
-	export let barWidth;
 	export let data;
 	export let d;
 	export let i;
-	export let margin;
+	export let xScale;
 
 	let inView = false;
 
@@ -35,18 +34,24 @@
 		<pattern
 			id="pattern-{d.type}"
 			patternUnits="userSpaceOnUse"
-			width={barWidth}
+			width={xScale(50)}
 			height={yScale(d.value)}
 		>
 			<image href={patterns[d.type]} x="0" y="0" width="408" height="612" />
 		</pattern>
 	</defs>
-	<rect x={0} y={0} width={barWidth} height={yScale($currentValue)} fill="url(#pattern-{d.type})" />
+	<rect
+		x={xScale(50)}
+		y={0}
+		width={xScale(50)}
+		height={yScale($currentValue)}
+		fill="url(#pattern-{d.type})"
+	/>
 	{#if inView}
 		<g transition:fade={{ delay: 350, duration: 1000 }}>
-			<text x={barWidth / 2} y={yScale(d.value) / 2} class="valueLabel">{d.value}%</text>
-			<text x={-margin.left} y={40} class="typeLabel">{d.type}.</text>
-			<foreignObject x={-margin.left + 30} y={45} width={130} height={200}>
+			<text x={xScale(75)} y={yScale(d.value) / 2} class="valueLabel">{d.value}%</text>
+			<text x={0} y={30} class="typeLabel">{d.type}.</text>
+			<foreignObject x={0 + 30} y={45} width={130} height={200}>
 				<p class="descriptionLabel" xmlns="http://www.w3.org/1999/xhtml">
 					{#each d.label as l}
 						{l}<br />
@@ -63,9 +68,17 @@
 	}
 	.black text.valueLabel {
 		fill: white;
+		stroke: white;
 	}
 	.brown text.valueLabel {
 		fill: darkred;
+		stroke: darkred;
+		stroke-width: 2px;
+	}
+	.yellow text.valueLabel {
+		fill: black;
+		stroke: black;
+		stroke-width: 2px;
 	}
 	.black rect {
 		stroke: #000;

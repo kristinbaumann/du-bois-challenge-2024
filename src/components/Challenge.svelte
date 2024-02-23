@@ -71,19 +71,19 @@
 		border-radius: 10px;
 		padding: 20px;
 		position: relative;
-		/* aspect-ratio: 0.79; */
 	}
 	@media (max-width: 767px) {
 		.recreation-wrapper {
 			padding: 10px 5px;
 		}
 	}
+	#challenge5 .recreation-wrapper {
+		padding: 10px 5px;
+	}
 	#challenge6 .recreation-wrapper {
 		padding: 5px 0 0 5px;
 	}
-	#challenge8 .recreation-wrapper {
-		padding: 5px 0 0;
-	}
+	#challenge8 .recreation-wrapper,
 	#challenge9 .recreation-wrapper {
 		padding: 5px 0 0;
 	}
