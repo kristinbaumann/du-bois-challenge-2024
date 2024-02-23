@@ -89,6 +89,9 @@
 		font-weight: 700;
 	}
 	text.valueLabel {
+		font-family:
+			Milestone One,
+			sans-serif;
 		font-weight: 700;
 		pointer-events: none;
 		opacity: 0;

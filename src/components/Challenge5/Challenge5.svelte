@@ -38,6 +38,6 @@
 		margin: auto;
 	}
 	.headline span.subtitle {
-		font-weight: 200;
+		font-family: 'ErieLight';
 	}
 </style>

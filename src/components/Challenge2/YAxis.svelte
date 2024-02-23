@@ -32,10 +32,11 @@
 
 <style>
 	.tickLabel {
-		fill: black;
+		fill: #333;
 	}
 	.axisLabel {
 		font-size: 0.5rem;
+		padding: 2px 0;
 		text-align: center;
 		text-transform: uppercase;
 	}

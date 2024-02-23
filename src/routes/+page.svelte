@@ -51,6 +51,7 @@
 </svelte:head>
 
 <style>
+	/* page headline font */
 	@font-face {
 		font-family: 'Gelasio';
 		font-style: normal;
@@ -59,6 +60,24 @@
 			local('Gelasio Regular'),
 			local('Gelasio-Regular'),
 			url(https://fonts.gstatic.com/s/gelasio/v1/cIf9MaFfvUQxTTqS9C6hYQ.woff2) format('woff2');
+	}
+
+	/* light font for labels in charts */
+	@font-face {
+		font-family: 'ErieLight';
+		src: url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.eot');
+		src:
+			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.eot?#iefix') format('embedded-opentype'),
+			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.woff2') format('woff2'),
+			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.woff') format('woff'),
+			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.ttf') format('truetype'),
+			url('fonts/ErieLight/30c6f356622bd29b5ba4fb9ad5a15f3b.svg#ErieLight') format('svg');
+	}
+
+	/* bold font for headlines in adaptions  */
+	@font-face {
+		font-family: 'Milestone One';
+		src: url('fonts/Milestone-One/Milestone One.otf');
 	}
 
 	:global(body) {
@@ -77,9 +96,15 @@
 	}
 	:global(.recreation .headline) {
 		margin-top: 0.5rem;
+		margin-bottom: 0.5rem;
 		text-align: center;
 		text-transform: uppercase;
-		font-size: 1rem;
+		font-family:
+			Milestone One,
+			sans-serif;
+		font-size: 1.5rem;
+		letter-spacing: 0.1rem;
+		color: #333;
 	}
 
 	:global(a) {
@@ -91,7 +116,10 @@
 		text-decoration: underline;
 	}
 	:global(.headline span.subtitle) {
-		font-weight: 400;
 		font-size: 0.8rem;
+		margin-top: 4px;
+	}
+	:global(.headline span.subtitle span) {
+		display: block;
 	}
 </style>

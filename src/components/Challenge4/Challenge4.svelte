@@ -100,8 +100,12 @@
 
 <div class="wrapper">
 	<h2 class="headline">
-		<span>The Georgio Negro.</span><br />
-		<span class="subtitle">A social study<br />By<br />W. E. Burghardt Du Bois.</span>
+		<span>The Georgio Negro.</span>
+		<span class="subtitle">
+			<span>A social study</span>
+			<span>By</span>
+			<span>W. E. Burghardt Du Bois.</span>
+		</span>
 	</h2>
 	<div class="chart-container">
 		<svg {width} {height} style="display: block;">

@@ -77,8 +77,12 @@
 		stroke: #f9ba00;
 	}
 	.typeLabel {
+		font-family:
+			Milestone One,
+			sans-serif;
+		letter-spacing: 0.1rem;
 		text-transform: uppercase;
-		font-size: 1.1rem;
+		font-size: 1.4rem;
 	}
 	.descriptionLabel {
 		text-transform: uppercase;

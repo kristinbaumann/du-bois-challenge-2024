@@ -66,6 +66,7 @@
 		margin: 0 0 5px;
 	}
 	.recreation-wrapper {
+		font-family: ErieLight, sans-serif;
 		background-color: #e4cfbed9;
 		border-radius: 10px;
 		padding: 20px;

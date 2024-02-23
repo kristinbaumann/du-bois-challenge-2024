@@ -116,6 +116,10 @@
 		stroke-opacity: 0.5;
 		transition: all 0.4s ease;
 	}
+	.filter {
+		font-family: Arial, Helvetica, sans-serif;
+		color: #333;
+	}
 	.filter button {
 		cursor: pointer;
 		background-color: rgba(0, 0, 0, 0.02);
