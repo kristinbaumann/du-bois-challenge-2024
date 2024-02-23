@@ -62,7 +62,8 @@
 	<p>In 1860 nearly 90% of the blacks were slaves.</p>
 	<p>En 1860 environ 90% des nègres étaient esclaves.</p>
 </div>
-<svg {width} {height}>
+
+<!-- <svg {width} {height}>
 	<g transform="translate({margin.left},{margin.top})">
 		<g class="bar1860" transform="translate(0,{margin.bar1860.top})">
 			<rect
@@ -133,7 +134,7 @@
 			</g>
 		</g>
 		<g class="lines">
-			<!-- dashed lines, order here is top to bottom-->
+			dashed lines, order here is top to bottom
 			<line
 				x1={xScale(1)}
 				y1={margin.bar1860.top + yScale1860(0)}
@@ -166,7 +167,7 @@
 			/>
 		</g>
 	</g>
-</svg>
+</svg> -->
 
 <style>
 	.headline p {

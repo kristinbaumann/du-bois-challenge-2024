@@ -98,14 +98,14 @@ SISTES DE L'EPOQUE.
 	<span>A series of statistical charts</span><br />
 </h2>
 
-<svg {width} {height}>
+<!-- <svg {width} {height}>
 	<g transform="translate({margin.left},{margin.top})">
 		<g class="pie" transform="translate({innerWidth / 2},{innerHeight / 2})">
-			<!-- pie pieces -->
+			<-- pie pieces 
 			{#each arcs as arc}
 				<path d={arc.d} fill={arc.color} stroke={arc.color} data-label={arc.label} />
 			{/each}
-			<!-- value labels (placed close to the outer radius for small values) -->
+			<-- value labels (placed close to the outer radius for small values) 
 			{#each arcs as arc}
 				{#if arc.value > 10}
 					<text x={arc.centroidDefault[0]} y={arc.centroidDefault[1]}>{arc.value}%</text>
@@ -113,10 +113,10 @@ SISTES DE L'EPOQUE.
 					<text x={arc.centroidOuter[0]} y={arc.centroidOuter[1]} class="tiny">{arc.value}%</text>
 				{/if}
 			{/each}
-			<!-- border of whole pie -->
+			<-- border of whole pie 
 			<circle cx={0} cy={0} r={100} fill="none" stroke="#6c6c6c" />
 		</g>
-		<!-- legend left -->
+		<-- legend left 
 		<g class="legend" transform="translate(0,{40})">
 			{#each labelData as d, i}
 				<circle cx={legendXDistOuter} cy={legendYDist * i} r={legendCircleRadius} fill={d.color} />
@@ -130,7 +130,7 @@ SISTES DE L'EPOQUE.
 				>
 			{/each}
 		</g>
-		<!-- legend right -->
+		<-- legend right 
 		<g class="legend french" transform="translate(0,{40})">
 			{#each labelData as d, i}
 				<circle
@@ -149,7 +149,7 @@ SISTES DE L'EPOQUE.
 			{/each}
 		</g>
 	</g>
-</svg>
+</svg> -->
 
 <style>
 	svg {
