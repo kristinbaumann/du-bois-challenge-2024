@@ -13,8 +13,9 @@
 </p>
 
 <p>
-	I specialize in coding interactive, responsive data visualizations. Therefore I used D3 and Svelte
-	to create a modern adaptation of Du Bois' originals.
+	In general, I specialize in coding interactive, responsive data visualizations. Therefore I used
+	D3 and Svelte to create modern adaptations of Du Bois' originals. For this challenge, I tried to
+	recreate it as close to the original as possible, adding only minor interactive features.
 </p>
 <p>
 	You can find the corresponding code
@@ -28,6 +29,7 @@
 
 <style>
 	p {
+		text-align: justify;
 		line-height: 1.8rem;
 	}
 </style>
