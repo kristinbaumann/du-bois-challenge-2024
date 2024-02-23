@@ -9,8 +9,8 @@
 	import Tooltip from './Tooltip.svelte';
 	import { extractCountyName, getCountyNameFromIndex, getPopulationSizeFromIndex } from './helpers';
 
-	let mapWidth = 450;
-	let mapHeight = 500;
+	let mapWidth = 300;
+	let mapHeight = mapWidth * 1.2;
 
 	let projection = geoAlbers();
 	$: projection.fitSize([mapWidth, mapWidth + 50], dataCounties);
@@ -148,7 +148,7 @@
 		align-items: center;
 		column-gap: 25px;
 	}
-	@media (max-width: 1160px) {
+	@media (max-width: 1024px) {
 		.map-plus-legend {
 			flex-direction: column;
 		}
