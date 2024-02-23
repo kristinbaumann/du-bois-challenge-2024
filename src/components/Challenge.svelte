@@ -83,7 +83,6 @@
 	}
 	#challenge8 .recreation-wrapper {
 		padding: 5px 0 0;
-		aspect-ratio: 0.74;
 	}
 	#challenge9 .recreation-wrapper {
 		padding: 5px 0 0;
