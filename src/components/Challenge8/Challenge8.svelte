@@ -37,6 +37,12 @@
 	$: xStartRightBar = xScale(2);
 	$: xMidRightBar = xScale(2.5);
 
+	// $: {
+	// 	if (window.innerWidth < 768) {
+	// 		barWidth = innerWidth / 2.5;
+	// 	}
+	// }
+
 	// y scale is different for left and right bar
 	const yScale1860 = scaleLinear()
 		.domain([0, 100])
@@ -84,8 +90,8 @@
 					class="rowLabel"
 				>
 					<text dx={1} dy={2} dominant-baseline="middle">{data1860.free}%</text>
-					<text x={xScale(1)} dx={-5} dy={-3} text-anchor="end">free laborers</text>
-					<text x={xScale(1)} dx={-5} dy={10} text-anchor="end">ouvriers libres</text>
+					<text x={xEndLeftBar} dx={-5} dy={-3} text-anchor="end">free laborers</text>
+					<text x={xEndLeftBar} dx={-5} dy={10} text-anchor="end">ouvriers libres</text>
 				</g>
 				<g
 					transform="translate({xMidLeftBar},{yScale1860(data1860.free) +
@@ -119,7 +125,7 @@
 						5})"
 					class="centerLabel"
 				>
-					<text dy={-15}>19%</text>
+					<text dy={-15}>{data1890.owners}%</text>
 					<text dy={0}>peasant proprietors</text>
 					<text dy={15}>paysans proprietaires</text>
 				</g>
@@ -128,7 +134,7 @@
 						yScale1890(data1890.tenants) / 2})"
 					class="centerLabel"
 				>
-					<text dy={-15}>81%</text>
+					<text dy={-15}>{data1890.tenants}%</text>
 					<text dy={0}>tenants</text>
 					<text dy={15}>métayers</text>
 				</g>
@@ -205,6 +211,11 @@
 		text-anchor: middle;
 		text-transform: uppercase;
 	}
+	@media (max-width: 768px) {
+		.centerLabel text {
+			font-size: 0.5rem;
+		}
+	}
 	.centerLabel.red text {
 		fill: #d22a49;
 		stroke: #d22a49;
@@ -216,6 +227,14 @@
 		font-size: 0.7rem;
 		font-weight: 700;
 		text-transform: uppercase;
+	}
+	@media (max-width: 530px) {
+		.rowLabel text {
+			opacity: 0;
+		}
+		.rowLabel text:nth-child(1) {
+			opacity: 1;
+		}
 	}
 	.rowLabel text:nth-of-type(1) {
 		font-size: 1.1rem;
