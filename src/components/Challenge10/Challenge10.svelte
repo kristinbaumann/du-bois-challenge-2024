@@ -56,8 +56,83 @@ SISTES DE L'EPOQUE.
 </script>
 
 <h2 class="headline">
-	<span>A series of statistical charts</span><br />
+	A SERIES OF STATISTICAL CHARTS, ILLUSTRATING THE CONDITIONS OF THE DESCENDANTS OF FOR- MER AFRICAN
+	SLAVES NOW RESIDENT IN THE UNITED STATES OF AMERICA.
 </h2>
+<h3 class="subheadline french">
+	UNE SÉRIE DE CARTES ET DIAGRAMMES STATISTIQUES MONTRANT LA CONDITION PRÉSENTE DES DESCENDANTS DES
+	ANCIENS ESCLAVES AFRI- CAINS ACTEULLMENT ÉTABLIS DANS LES ETATS UNIS D'AMÉRIQUE.
+</h3>
+<div class="map-container">
+	<p>
+		PREPARED AND EXECUTED BY<br />
+		NEGRO STUDENTS UNDER THE<br /> DIRECTION OF<br />ATLANTA UNIVERSITY<br />ATLANTA, GA.<br
+		/>UNITED STATES OF AMERICA
+	</p>
+	<Map />
+	<p class="french">
+		PREPARE ET EXECUTE PAR<br />NÈGRES ÉTUDIANTS SOUS<br />LA DIRECTION DE L’UNIVERSITÉ ATLANTA<br
+		/>D'ATLANTA<br />ETAT DE GEORGIA<br />ETATS UNIS D'AMERIQUE
+	</p>
+</div>
+<p class="pie-intro">
+	<span>THE UNIVERSITY WAS FOUNDED IN 1867. IT HAS INSTRUCTED 6000 NEGRO STUDENTS.</span>
+	<span class="french"
+		>L'UNIVERSITÉ A ÉTÉ FONDÉE EN 1867. LA DONNÉ l'INSTRUCTION A'6000 ÉTUDIANTS NÈGRES</span
+	>
+	<span>IT HAS GRADUATED 330 NEGROES AMONG WHOM ARE:</span>
+	<span class="french">ELLE A D'ÉLIVRE DES DIPLOMES A 330 NÈGRES DONT:</span>
+</p>
+<Pie />
+<p class="ending">
+	<span
+		>THE UNIVERSITY HAS 20 PROFESSORS AND INSTRUTORS AND 250 STUDENTS AT PRESENT. IT HAS FIVE
+		BUILDING, 60 ACRES OF CAMPUS AND A LIBRARY OF 11,000 VOLUMES. IT AIMS TO RAISE AND CIVILIZE THE
+		SONS OF THE FREEDMEN BY TRAINING THEIR MORE CAPABLE MEMBERS IN THE LIBER- AL ARTS ACCORDING TO
+		THE BEST STANDARDS OF THE DAY. THE PROPER ACCOMPLISHMENT OF THIS WORK DEMANDS AN ENDOWMENT FUND
+		OF $500,000.</span
+	><br /><br />
+	<span class="french"
+		>L'UNIVERSITÉ A ACTUELLEMENT 20 PROFESSEURS ET INSTRUCTEURS ET 250 ÉTUDIANTS ELLE EST COMPOSEE
+		DE CINC BÂTIMENTS, 60 ACRES (ENVIRON 26 HECTARES) DE TERRAIN SERVANT DE COUR ET DE CHAMP DE
+		RÉCREATION, ET D'UNE BIBLIOTHÈQUE CONTENANT 11,000 VOLUMES. SON BUT EST D'ÉLEVER ET DE CIVILISER
+		LES FILS DES NEGRES AFFRANCHS EN DONNANT AUX MEUX DOUES UNE ÉDUCATION DANS LES ARTS LIBÉRAUX EN
+		ACCORD AVEC LES IDÉES LES PLUS PROGRESS - SISTES DE L'EPOQUE. L'ACCOMPLISSEMENT DE CETTE OEUVRE
+		DEMANDE UNE DOTATION DE $500,000 (2,500,000 FRANCS)
+	</span>
+</p>
 
-<Map />
-<!-- <Pie /> -->
+<style>
+	.headline {
+		font-size: 1.4rem;
+		margin-bottom: 0;
+	}
+	.subheadline {
+		font-size: 0.9rem;
+		text-align: center;
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+	}
+	.french {
+		color: #d22a49;
+	}
+	p span {
+		display: inline-block;
+	}
+	.map-container {
+		display: flex;
+		justify-content: space-between;
+	}
+	.map-container p {
+		font-size: 0.8rem;
+		text-align: center;
+	}
+	.pie-intro {
+		font-size: 0.8rem;
+		text-align: center;
+		margin-bottom: 0;
+	}
+	.ending {
+		font-size: 0.8rem;
+	}
+</style>

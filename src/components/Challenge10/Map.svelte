@@ -3,10 +3,8 @@
 	import mapGeo from '../../data/challenge10/states-20m-geo.json';
 	import mapData from '../../data/challenge10/map_data.json';
 
-	const height = 300;
-	const width = 500;
-
-	const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+	const height = 100;
+	const width = 150;
 
 	// create a unit projection
 	let projection = geoAlbersUsa().scale(1).translate([0, 0]);
@@ -59,6 +57,10 @@
 </div>
 
 <style>
+	svg {
+		display: block;
+		margin: 0 auto;
+	}
 	path.state {
 		stroke: #333;
 		stroke-width: 1;

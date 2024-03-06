@@ -2,7 +2,7 @@
 	import { arc } from 'd3-shape';
 	import data from '../../data/challenge10/data';
 
-	const height = 220;
+	const height = 200;
 	let width = 500;
 	const margin = {
 		top: 10,
@@ -105,7 +105,7 @@
 <style>
 	svg {
 		display: inline-block;
-		margin: 250px auto;
+		margin: 0 auto;
 		width: 100%;
 	}
 	.pie text {
