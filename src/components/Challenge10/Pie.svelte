@@ -10,6 +10,10 @@
 		bottom: 10,
 		left: 10
 	};
+	let outerRadius = 100;
+	if (window.innerWidth <= 425) {
+		outerRadius = 60;
+	}
 	const innerHeight = height - margin.top - margin.bottom;
 	$: innerWidth = width - margin.left - margin.right;
 
@@ -19,7 +23,7 @@
 	const arcs = data.map((d) => {
 		const optionsDefault = {
 			innerRadius: 0,
-			outerRadius: 100,
+			outerRadius: outerRadius,
 			startAngle: acc,
 			endAngle: (acc += (Math.PI * 2 * d.percentage) / total)
 		};
@@ -30,7 +34,7 @@
 			label: d.occupation,
 			d: fn(optionsDefault),
 			centroidDefault: fn.centroid(optionsDefault),
-			centroidOuter: fn.centroid({ ...optionsDefault, innerRadius: 70 })
+			centroidOuter: fn.centroid({ ...optionsDefault, innerRadius: outerRadius - 30 })
 		};
 	});
 
@@ -59,7 +63,7 @@
 					{/if}
 				{/each}
 				<!-- border of whole pie  -->
-				<circle cx={0} cy={0} r={100} fill="none" stroke="#6c6c6c" />
+				<circle cx={0} cy={0} r={outerRadius} fill="none" stroke="#6c6c6c" />
 			</g>
 			<!-- legend left  -->
 			<g class="legend" transform="translate(0,{40})">

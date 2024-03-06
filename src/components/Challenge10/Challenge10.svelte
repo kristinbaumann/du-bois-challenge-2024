@@ -123,16 +123,24 @@ SISTES DE L'EPOQUE.
 		display: flex;
 		justify-content: space-between;
 	}
-	.map-container p {
-		font-size: 0.8rem;
-		text-align: center;
-	}
-	.pie-intro {
+	.map-container,
+	.pie-intro,
+	.ending {
 		font-size: 0.8rem;
 		text-align: center;
 		margin-bottom: 0;
 	}
-	.ending {
-		font-size: 0.8rem;
+	@media (max-width: 425px) {
+		.headline {
+			font-size: 1rem;
+		}
+		.subheadline {
+			font-size: 0.7rem;
+		}
+		.map-container,
+		.pie-intro,
+		.ending {
+			font-size: 0.6rem;
+		}
 	}
 </style>
