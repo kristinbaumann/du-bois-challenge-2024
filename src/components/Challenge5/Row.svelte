@@ -1,8 +1,4 @@
 <script>
-	import { tweened } from 'svelte/motion';
-	import { fade } from 'svelte/transition';
-	import { inview } from 'svelte-inview';
-
 	import { patterns } from '$lib/assets/images/patterns.js';
 
 	export let yScale;
@@ -10,25 +6,11 @@
 	export let d;
 	export let i;
 	export let xScale;
-
-	let inView = false;
-
-	let currentValue = tweened(0, {
-		duration: 1000
-	});
 </script>
 
 <g
 	class={d.type}
 	transform="translate(0,{yScale(data.reduce((acc, d, j) => (j < i ? acc + d.value : acc), 0))})"
-	use:inview={{
-		rootMargin: '-50px',
-		unobserveOnEnter: true
-	}}
-	on:inview_enter={() => {
-		inView = true;
-		$currentValue = d.value;
-	}}
 >
 	<defs>
 		<pattern
@@ -44,22 +26,20 @@
 		x={xScale(50)}
 		y={0}
 		width={xScale(50)}
-		height={yScale($currentValue)}
+		height={yScale(d.value)}
 		fill="url(#pattern-{d.type})"
 	/>
-	{#if inView}
-		<g transition:fade={{ delay: 350, duration: 1000 }}>
-			<text x={xScale(75)} y={yScale(d.value) / 2} class="valueLabel">{d.value}%</text>
-			<text x={0} y={30} class="typeLabel">{d.type}.</text>
-			<foreignObject x={0 + 30} y={45} width={130} height={200}>
-				<p class="descriptionLabel" xmlns="http://www.w3.org/1999/xhtml">
-					{#each d.label as l}
-						{l}<br />
-					{/each}
-				</p>
-			</foreignObject>
-		</g>
-	{/if}
+	<g>
+		<text x={xScale(75)} y={yScale(d.value) / 2} class="valueLabel">{d.value}%</text>
+		<text x={0} y={30} class="typeLabel">{d.type}.</text>
+		<foreignObject x={0 + 30} y={45} width={130} height={200}>
+			<p class="descriptionLabel" xmlns="http://www.w3.org/1999/xhtml">
+				{#each d.label as l}
+					{l}<br />
+				{/each}
+			</p>
+		</foreignObject>
+	</g>
 </g>
 
 <style>

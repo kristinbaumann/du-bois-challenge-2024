@@ -91,7 +91,6 @@ the illteracy points.
 	}
 	svg {
 		display: block;
-		/* margin-top: 50px; */
 		width: 100%;
 		padding: 0 10px;
 	}

@@ -77,7 +77,6 @@
 	g.row {
 		cursor: pointer;
 	}
-
 	text {
 		font-size: 0.6rem;
 		transition: all 0.5s ease;
