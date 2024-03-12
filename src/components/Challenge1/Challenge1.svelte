@@ -6,8 +6,6 @@
 	import data1870 from '../../data/challenge01/data-1870_converted_corrected';
 	import data1880 from '../../data/challenge01/data-1880_converted_corrected';
 	import colors from '../../data/challenge01/colors';
-	import Tooltip from './Tooltip.svelte';
-	import { extractCountyName, getCountyNameFromIndex, getPopulationSizeFromIndex } from './helpers';
 
 	let width = 300;
 	let height = 350;
@@ -26,32 +24,16 @@
 	// Update the projection to use computed scale & translate.
 	projection.scale(s).translate(t);
 
-	$: hoveredCountyIndex = null;
-
-	$: getCountyColor = function getColor(dataset, c) {
+	function getCountyColor(dataset, c) {
 		const countyNameWithNumber = c.properties.county;
 		const countyName = extractCountyName(countyNameWithNumber);
 		const populationSize = dataset[countyName].Population;
 		return colors[populationSize].hex;
-	};
+	}
 
-	$: getTooltipData = function getData() {
-		if (!hoveredCountyIndex) {
-			return null;
-		}
-		const county = dataCounties.features[hoveredCountyIndex];
-		const centroid = drawCountyPath.centroid(county);
-
-		return {
-			x: centroid[1],
-			y: centroid[0],
-			name: getCountyNameFromIndex(hoveredCountyIndex),
-			values: {
-				'1870': getPopulationSizeFromIndex(hoveredCountyIndex, '1870'),
-				'1880': getPopulationSizeFromIndex(hoveredCountyIndex, '1880')
-			}
-		};
-	};
+	function extractCountyName(nameWithNumber) {
+		return nameWithNumber.substring(0, nameWithNumber.length - 2);
+	}
 </script>
 
 <h2 class="headline">Negro Population of Georgia By Counties.</h2>
@@ -61,16 +43,13 @@
 		<svg {width} {height}>
 			<text x={60} y={30} class="year-label">1870</text>
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<g transform="translate(0,0) rotate(7)" on:mouseleave={() => (hoveredCountyIndex = null)}>
+			<g transform="rotate(7)">
 				{#each dataCounties.features as c, i}
 					<path
 						d={drawCountyPath(c)}
 						id={c.properties.county}
 						class="county"
 						fill={getCountyColor(data1870, c)}
-						fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
-						on:mouseover={() => (hoveredCountyIndex = i)}
-						on:focus={() => (hoveredCountyIndex = i)}
 					/>
 				{/each}
 			</g>
@@ -103,23 +82,19 @@
 		<svg {width} {height}>
 			<text x={60} y={30} class="year-label">1880</text>
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<g transform="translate(0,0) rotate(7)" on:mouseleave={() => (hoveredCountyIndex = null)}>
+			<g transform="rotate(7)">
 				{#each dataCounties.features as c, i}
 					<path
 						d={drawCountyPath(c)}
 						id={c.properties.county}
 						class="county"
 						fill={getCountyColor(data1880, c)}
-						fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
-						on:mouseover={() => (hoveredCountyIndex = i)}
-						on:focus={() => (hoveredCountyIndex = i)}
 					/>
 				{/each}
 			</g>
 		</svg>
 	</div>
 </div>
-<Tooltip data={getTooltipData()} />
 
 <style>
 	svg {
@@ -131,14 +106,12 @@
 		stroke-opacity: 0.5;
 		transition: all 0.4s ease;
 	}
-
 	.map-plus-legend {
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
 		column-gap: 10px;
 	}
-
 	.legend span {
 		display: inline-block;
 		width: 15px;
