@@ -9,38 +9,28 @@
 	import Tooltip from './Tooltip.svelte';
 	import { extractCountyName, getCountyNameFromIndex, getPopulationSizeFromIndex } from './helpers';
 
-	let mapWidth;
-	if (window.innerWidth < 400) {
-		mapWidth = 220;
-	} else {
-		mapWidth = 300;
-	}
-	let mapHeight = mapWidth * 1.2;
+	let width = 300;
+	let height = 350;
 
-	let projection = geoAlbers();
-	$: projection.fitSize([mapWidth, mapHeight], dataCounties);
-	$: drawCountyPath = geoPath(projection);
+	// create a unit projection
+	let projection = geoAlbers().scale(1).translate([0, 0]);
 
-	const filterOptions = [
-		{
-			key: '1870',
-			label: 'Count in 1870',
-			dataset: data1870
-		},
-		{
-			key: '1880',
-			label: 'Count in 1880',
-			dataset: data1880
-		}
-	];
+	// create a path generator
+	let drawCountyPath = geoPath(projection);
+
+	// Compute the bounds of the map, then derive scale & translate.
+	const b = drawCountyPath.bounds(dataCounties),
+		s = 0.95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+		t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
+
+	// Update the projection to use computed scale & translate.
+	projection.scale(s).translate(t);
 
 	$: hoveredCountyIndex = null;
-	$: selectedFilter = filterOptions[0];
 
-	$: getCountyColor = function getColor(c) {
+	$: getCountyColor = function getColor(dataset, c) {
 		const countyNameWithNumber = c.properties.county;
 		const countyName = extractCountyName(countyNameWithNumber);
-		const dataset = selectedFilter.dataset;
 		const populationSize = dataset[countyName].Population;
 		return colors[populationSize].hex;
 	};
@@ -66,26 +56,18 @@
 
 <h2 class="headline">Negro Population of Georgia By Counties.</h2>
 
-<div class="filter">
-	<p>Color map by:</p>
-	{#each filterOptions as option}
-		<button class:active={selectedFilter === option} on:click={() => (selectedFilter = option)}>
-			{option.label}
-		</button>
-	{/each}
-</div>
-
-<div class="map-plus-legend">
-	<div class="chart-container" bind:clientWidth={mapWidth}>
-		<svg height={mapHeight}>
+<div class="map-plus-legend top">
+	<div class="chart-container">
+		<svg {width} {height}>
+			<text x={60} y={30} class="year-label">1870</text>
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<g transform="translate(25,0) rotate(6)" on:mouseleave={() => (hoveredCountyIndex = null)}>
+			<g transform="translate(0,0) rotate(7)" on:mouseleave={() => (hoveredCountyIndex = null)}>
 				{#each dataCounties.features as c, i}
 					<path
 						d={drawCountyPath(c)}
 						id={c.properties.county}
 						class="county"
-						fill={getCountyColor(c)}
+						fill={getCountyColor(data1870, c)}
 						fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
 						on:mouseover={() => (hoveredCountyIndex = i)}
 						on:focus={() => (hoveredCountyIndex = i)}
@@ -96,12 +78,45 @@
 	</div>
 
 	<div class="legend">
-		{#each Object.values(colors) as color}
-			<p>
-				<span style="background-color: {color.hex} "
-				></span>{color.populationDescription.toLowerCase()}
-			</p>
+		{#each Object.values(colors) as color, i}
+			{#if i < 3}
+				<p>
+					<span style="background-color: {color.hex} "
+					></span>{color.populationDescription.toLowerCase()}
+				</p>
+			{/if}
 		{/each}
+	</div>
+</div>
+<div class="map-plus-legend bottom">
+	<div class="legend">
+		{#each Object.values(colors) as color, i}
+			{#if i >= 3}
+				<p>
+					<span style="background-color:{color.hex}"
+					></span>{color.populationDescription.toLowerCase()}
+				</p>
+			{/if}
+		{/each}
+	</div>
+	<div class="chart-container">
+		<svg {width} {height}>
+			<text x={60} y={30} class="year-label">1880</text>
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<g transform="translate(0,0) rotate(7)" on:mouseleave={() => (hoveredCountyIndex = null)}>
+				{#each dataCounties.features as c, i}
+					<path
+						d={drawCountyPath(c)}
+						id={c.properties.county}
+						class="county"
+						fill={getCountyColor(data1880, c)}
+						fill-opacity={hoveredCountyIndex === i ? 0.8 : 1}
+						on:mouseover={() => (hoveredCountyIndex = i)}
+						on:focus={() => (hoveredCountyIndex = i)}
+					/>
+				{/each}
+			</g>
+		</svg>
 	</div>
 </div>
 <Tooltip data={getTooltipData()} />
@@ -116,26 +131,14 @@
 		stroke-opacity: 0.5;
 		transition: all 0.4s ease;
 	}
-	.filter {
-		font-family: Arial, Helvetica, sans-serif;
-		color: #333;
+
+	.map-plus-legend {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		column-gap: 10px;
 	}
-	.filter button {
-		cursor: pointer;
-		background-color: rgba(0, 0, 0, 0.02);
-		border: 1px solid #333;
-		border-radius: 5px;
-		transition: all 0.2s ease;
-		margin-right: 12px;
-		padding: 3px 10px;
-	}
-	.filter button:hover {
-		background-color: rgba(0, 0, 0, 0.1);
-	}
-	.filter button.active {
-		background-color: rgba(0, 0, 0, 0.7);
-		color: rgba(356, 356, 356, 0.8);
-	}
+
 	.legend span {
 		display: inline-block;
 		width: 15px;
@@ -143,22 +146,19 @@
 		border-radius: 50%;
 		margin-right: 5px;
 	}
-	.filter {
-		text-align: center;
-		margin-bottom: 5px;
+	.legend p {
+		margin: 2rem 0;
 	}
-	.filter p {
-		margin-bottom: 10px;
+	.year-label {
+		font-weight: bold;
+		stroke: black;
 	}
-	.map-plus-legend {
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		column-gap: 25px;
-	}
-	@media (max-width: 1024px) {
+	@media (max-width: 767px) {
 		.map-plus-legend {
 			flex-direction: column;
+		}
+		.map-plus-legend.bottom {
+			flex-direction: column-reverse;
 		}
 	}
 </style>
