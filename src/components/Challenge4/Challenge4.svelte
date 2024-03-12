@@ -192,8 +192,7 @@
 		<span>CES DESIGNED TO ILLUSTRATE THE DEVELOPMENT OF THE AMERICAN NEGRO IN A</span>
 		<span>SINGLE TYPICAL STATE OF THE UNITED STATES.</span>
 		<span class="break"></span>
-		<span>"The problem of the 20th Century is the the problem of the </span><span>color-line."</span
-		>
+		<span>"The problem of the 20th Century is the problem of the </span><span>color-line."</span>
 	</p>
 </div>
 
