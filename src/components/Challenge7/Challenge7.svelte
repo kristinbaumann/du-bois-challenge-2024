@@ -15,7 +15,6 @@ the illteracy points.
 	import { scaleLinear } from 'd3-scale';
 	import { randomInt } from 'd3-random';
 	import data from '../../data/challenge07/data.js';
-	import Bar from './Bar.svelte';
 	import markerGreen from '$lib/assets/images/marker_green.png';
 	import markerRed from '$lib/assets/images/marker_red.png';
 
@@ -68,7 +67,14 @@ the illteracy points.
 				<text x={-margin.left} y={yScale(i) + barHeight / 2} dominant-baseline="central"
 					>{d.country}</text
 				>
-				<Bar bind:xScale {yScale} {barHeight} index={i} value={d.value} country={d.country} />
+				<rect
+					x={xScale(0)}
+					y={yScale(i)}
+					height={barHeight}
+					width={xScale(d.value)}
+					fill="url(#pattern-green-{i})"
+					class:highlight={d.country === 'Negroes, U.S.A.'}
+				/>
 			{/each}
 		</g>
 	</svg>
@@ -96,5 +102,16 @@ the illteracy points.
 	}
 	text {
 		font-size: 0.6rem;
+	}
+	rect {
+		stroke: black;
+		stroke-width: 0.5px;
+		transition: all 0.5s ease;
+	}
+	rect.highlight {
+		fill: url(#pattern-red);
+	}
+	rect:hover {
+		fill-opacity: 0.6;
 	}
 </style>
